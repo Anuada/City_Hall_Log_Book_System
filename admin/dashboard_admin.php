@@ -65,7 +65,7 @@ $navbar = ob_get_clean();
                 <h4>Dashboard</h4>
                 <p>Some text..</p>
             </div>
-            <div class="row">
+            <div class="row table-responsive">
                 <table class="table table-bordered" style="width:98%; margin-left:10px;">
                     <thead>
                         <tr>
@@ -86,6 +86,7 @@ $navbar = ob_get_clean();
                                 <td><?php echo htmlspecialchars($visitors["purpose"], ENT_QUOTES, 'UTF-8'); ?></td>
                                 <td><?php echo htmlspecialchars($visitors["date"], ENT_QUOTES, 'UTF-8'); ?></td>
                                 <td><a href="edit.php?id=<?php echo urlencode($visitors['id']); ?>">Edit</a></td>
+
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
