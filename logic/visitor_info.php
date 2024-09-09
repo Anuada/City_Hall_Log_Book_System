@@ -32,9 +32,9 @@ function uploadEvents($db)
     $success = $db->addRecord($table, $data);
 
     if ($success) {
-        $_SESSION["m"] = "Upload successfully";
+        $_SESSION["m"] = "Visitor Logged Successfully";
     } else {
-        $_SESSION["m"] = "Error uploading!";
+        $_SESSION["m"] = "Error Logging!";
     }
 
     header("Location: ../visitor/visitor_upload_info.php");
