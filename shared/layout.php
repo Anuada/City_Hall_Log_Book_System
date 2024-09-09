@@ -18,7 +18,6 @@
 </head>
 
 <body>
-    <?php ob_start() ?>
 
     <div class="loader" id="loadingModal">
         <div class="dot dot-1"></div>
@@ -28,10 +27,7 @@
         <div class="dot dot-5"></div>
     </div>
 
-    <?php $loader = ob_get_clean() ?>
-
-    <?php echo (!isset($load)) ? $loader : "" ?>
-    <?php echo (isset($navbar)) ? $navbar : "" ?>
+    <?php echo isset($navbar) ? $navbar : "" ?>
 
     <!-- Content of the page -->
     <?php echo $content ?>
@@ -45,12 +41,12 @@
 
     <!-- <script src="../assets/js/prompt.js"></script> -->
 
-    <?php if (isset($_SESSION["m"])) : ?>
+    <?php if (isset($_SESSION["m"])): ?>
         <?php
         $m = $_SESSION["m"];
         $i = strlen($m) - 1;
         ?>
-        <?php if ($m[$i] != "!") : ?>
+        <?php if ($m[$i] != "!"): ?>
             <?php $m = $m . "!" ?>
             <script>
                 Swal.fire({
@@ -60,7 +56,7 @@
                     timer: 2000
                 });
             </script>
-        <?php else : ?>
+        <?php else: ?>
             <script>
                 Swal.fire({
                     icon: 'error',
