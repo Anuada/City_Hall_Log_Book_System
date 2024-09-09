@@ -99,4 +99,15 @@ class DbHelper
         $cond = implode($implode, $condition);
         return $cond;
     }
+
+    public function getAllLogs()
+    {
+        $sql = "SELECT `id`, CONCAT(`fname`,' ',`lname`) AS `title`, `purpose`, `date` AS `start`, `date` AS `end` FROM `visitor_info`";
+        $query = $this->conn->query($sql);
+        $rows = [];
+        while ($row = $query->fetch_assoc()) {
+            $rows[] = $row;
+        }
+        return $rows;
+    }
 }

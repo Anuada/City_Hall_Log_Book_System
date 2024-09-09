@@ -3,7 +3,7 @@ session_start();
 require_once "../util/DbHelper.php";
 
 $db = new DbHelper();
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 $recordsPerPage = 10;
 $start = ($page - 1) * $recordsPerPage;
 $visitor = $db->fetchRecords_limit("visitor_info", $start, $recordsPerPage);
@@ -21,6 +21,7 @@ $navbar = ob_get_clean();
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="../assets/css/admin_dashboard.css">
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css" rel="stylesheet">
 <?php $styles = ob_get_clean() ?>
 
 <?php ob_start() ?>
@@ -52,8 +53,8 @@ $navbar = ob_get_clean();
             <h2>Logo</h2>
 
             <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a href="dashboard_admin.php">Dashboard</a></li>
-                <li><a href="all_info.php">All Log Book</a></li>
+                <li><a href="dashboard_admin.php">Dashboard</a></li>
+                <li class="active"><a href="all_info.php">All Log Book</a></li>
                 <li><a href="#section3">#</a></li>
                 <li><a href="#section4">#</a></li>
             </ul><br>
@@ -62,15 +63,49 @@ $navbar = ob_get_clean();
 
         <div class="col-sm-9">
             <div class="well">
-                <h4>Dashboard</h4>
+                <h4>All Logs</h4>
                 <p>Some text..</p>
             </div>
+        </div>
 
-
-
+        <div class="col-sm-9">
+            <div class="well">
+                <div id="calendar"></div>
+            </div>
         </div>
     </div>
 </div>
+
+<!-- Modal HTML (Bootstrap v3) -->
+<div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="modalTitle"></h4>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Purpose</th>
+                        </tr>
+                    </thead>
+                    <tbody id="modalBody">
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <?php $content = ob_get_clean() ?>
 
@@ -78,5 +113,8 @@ $navbar = ob_get_clean();
 <script src="../assets/js/navbar.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="../assets/js/log.calendar.js"></script>
 <?php $scripts = ob_get_clean() ?>
 <?php require_once "../shared/layout.php" ?>

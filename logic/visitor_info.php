@@ -18,6 +18,11 @@ function uploadEvents($db)
     $purpose = $_POST['purpose'];
     $date = $_POST['date'];
 
+    if (empty(trim($fname)) && empty(trim($lname)) && empty(trim($purpose)) && empty(trim($date))) {
+        $_SESSION["m"] = "Fill out the missing fields!";
+        header("Location: ../visitor/visitor_upload_info.php");
+        exit();
+    }
 
     $table = "visitor_info";
     $data = array(
