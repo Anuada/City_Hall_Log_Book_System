@@ -89,8 +89,8 @@ $navbar = ob_get_clean();
                                     <td><?php echo htmlspecialchars($visitors["type"], ENT_QUOTES, 'UTF-8'); ?></td>
                                     <td><?php echo date('F d, Y h:i A', strtotime(htmlspecialchars($visitors["date"], ENT_QUOTES, 'UTF-8'))); ?>
                                     </td>
-                                    <td><a href="edit.php?id=<?php echo urlencode($visitors['id']); ?>">Edit</a></td>
-
+                                    <td><a href="edit.php?id=<?php echo urlencode($visitors['id']); ?>"
+                                            class="btn btn-primary">Edit</a></td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
