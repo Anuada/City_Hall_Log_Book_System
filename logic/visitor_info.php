@@ -3,23 +3,24 @@
 session_start();
 
 require_once "../util/DbHelper.php";
+require_once "../enums/Type.php";
 
 $db = new DbHelper();
+$types = array_column(Type::cases(),'value');
 
 if (isset($_POST['submit'])) {
-    uploadEvents($db);
+    uploadEvents($db, $types);
 }
 
-function uploadEvents($db)
+function uploadEvents($db, $types)
 {
 
     $fname = $_POST['fname'];
     $lname = $_POST['lname'];
     $purpose = $_POST['purpose'];
     $type = $_POST['type'];
-    $date = $_POST['date'];
 
-    if (empty(trim($fname)) && empty(trim($lname)) && empty(trim($purpose)) && empty(trim($date)) && empty(trim($type))) {
+    if (empty(trim($fname)) && empty(trim($lname)) && empty(trim($purpose)) && in_array($type,$types)) {
         $_SESSION["m"] = "Fill out the missing fields!";
         header("Location: ../visitor/visitor_upload_info.php");
         exit();
@@ -32,7 +33,6 @@ function uploadEvents($db)
         "lname" => $lname,
         "purpose" => $purpose,
         "type" => $type,
-        "date" => $date,
 
     );
 

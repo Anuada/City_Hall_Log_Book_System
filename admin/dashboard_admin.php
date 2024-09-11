@@ -65,32 +65,36 @@ $navbar = ob_get_clean();
                 <h4>Dashboard</h4>
                 <p>Some text..</p>
             </div>
-            <div class="row table-responsive">
-                <table class="table table-bordered" style="width:98%; margin-left:10px;">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Last name</th>
-                            <th>Purpose</th>
-                            <th>Date</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($visitor as $visitors) : ?>
+            <div class="well">
+                <div class="row table-responsive">
+                    <table class="table table-bordered" style="width:98%; margin-left:10px;">
+                        <thead>
                             <tr>
-                                <td><?php echo htmlspecialchars($visitors["id"], ENT_QUOTES, 'UTF-8'); ?></td>
-                                <td><?php echo htmlspecialchars($visitors["fname"], ENT_QUOTES, 'UTF-8'); ?></td>
-                                <td><?php echo htmlspecialchars($visitors["lname"], ENT_QUOTES, 'UTF-8'); ?></td>
-                                <td><?php echo htmlspecialchars($visitors["purpose"], ENT_QUOTES, 'UTF-8'); ?></td>
-                                <td><?php echo htmlspecialchars($visitors["date"], ENT_QUOTES, 'UTF-8'); ?></td>
-                                <td><a href="edit.php?id=<?php echo urlencode($visitors['id']); ?>">Edit</a></td>
-
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Last name</th>
+                                <th>Purpose</th>
+                                <th>Type</th>
+                                <th>Date</th>
+                                <th>Action</th>
                             </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($visitor as $visitors) : ?>
+                                <tr>
+                                    <td><?php echo htmlspecialchars($visitors["id"], ENT_QUOTES, 'UTF-8'); ?></td>
+                                    <td><?php echo htmlspecialchars($visitors["fname"], ENT_QUOTES, 'UTF-8'); ?></td>
+                                    <td><?php echo htmlspecialchars($visitors["lname"], ENT_QUOTES, 'UTF-8'); ?></td>
+                                    <td><?php echo htmlspecialchars($visitors["purpose"], ENT_QUOTES, 'UTF-8'); ?></td>
+                                    <td><?php echo htmlspecialchars($visitors["type"], ENT_QUOTES, 'UTF-8'); ?></td>
+                                    <td><?php echo date('F d, Y h:i A',strtotime(htmlspecialchars($visitors["date"], ENT_QUOTES, 'UTF-8'))); ?></td>
+                                    <td><a href="edit.php?id=<?php echo urlencode($visitors['id']); ?>">Edit</a></td>
+
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
            
