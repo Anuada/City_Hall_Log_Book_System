@@ -27,7 +27,7 @@ function uploadEvents($db, $types)
         'type' => $type,
     ];
 
-    if (empty(trim($fname)) || empty(trim($lname)) || empty(trim($purpose))) {
+    if (empty(trim($fname)) || empty(trim($lname)) || empty(trim($purpose)) || empty(trim($type))) {
         $_SESSION["m"] = "Fill out the missing fields!";
         $_SESSION["fieldInputs"] = $fieldInputs;
         header("Location: ../visitor/visitor_upload_info.php");
