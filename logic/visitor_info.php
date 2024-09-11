@@ -42,9 +42,8 @@ function uploadEvents($db, $types)
     }
 
     $table = "visitor_info";
-    $data = $fieldInputs;
 
-    $success = $db->addRecord($table, $data);
+    $success = $db->addRecord($table, $fieldInputs);
 
     if ($success) {
         $_SESSION["m"] = "Visitor Logged Successfully";
