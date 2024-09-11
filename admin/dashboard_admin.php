@@ -38,9 +38,9 @@ $navbar = ob_get_clean();
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="dashboard_admin.php">Dashboard</a></li>
-                <li><a href="all_info.php">All Log Book</a></li>
-                <li><a href="#">Gender</a></li>
-                <li><a href="#">Geo</a></li>
+                <li><a href="all_info.php">Reports</a></li>
+                <li><a href="#">#</a></li>
+                <li><a href="#">#</a></li>
             </ul>
         </div>
     </div>
@@ -53,7 +53,7 @@ $navbar = ob_get_clean();
 
             <ul class="nav nav-pills nav-stacked">
                 <li class="active"><a href="dashboard_admin.php">Dashboard</a></li>
-                <li><a href="all_info.php">All Log Book</a></li>
+                <li><a href="all_info.php">Reports</a></li>
                 <li><a href="#section3">#</a></li>
                 <li><a href="#section4">#</a></li>
             </ul><br>
@@ -93,7 +93,7 @@ $navbar = ob_get_clean();
                 </table>
             </div>
 
-            <!-- Pagination -->
+           
             <nav aria-label="Page navigation">
                 <ul class="pagination">
                     <?php if ($page > 1) : ?>

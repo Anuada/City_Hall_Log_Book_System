@@ -9,13 +9,14 @@ $start = ($page - 1) * $recordsPerPage;
 $visitor = $db->fetchRecords_limit("visitor_info", $start, $recordsPerPage);
 $totalRecords = $db->fetchTotalRecords("visitor_info");
 $totalPages = ceil($totalRecords / $recordsPerPage);
+$allClients = $db->allClients();
 
 $title = "City Hall";
 $load = false;
 ob_start();
 include "../shared/navbar_page.php";
 $navbar = ob_get_clean();
-?>
+?> 
 
 <?php ob_start() ?>
 
@@ -39,9 +40,9 @@ $navbar = ob_get_clean();
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="dashboard_admin.php">Dashboard</a></li>
-                <li><a href="all_info.php">All Log book</a></li>
-                <li><a href="#">Gender</a></li>
-                <li><a href="#">Geo</a></li>
+                <li><a href="all_info.php">Reports</a></li>
+                <li><a href="#">#</a></li>
+                <li><a href="#">#</a></li>
             </ul>
         </div>
     </div>
@@ -54,7 +55,7 @@ $navbar = ob_get_clean();
 
             <ul class="nav nav-pills nav-stacked">
                 <li><a href="dashboard_admin.php">Dashboard</a></li>
-                <li class="active"><a href="all_info.php">All Log Book</a></li>
+                <li class="active"><a href="all_info.php">Reports</a></li>
                 <li><a href="#section3">#</a></li>
                 <li><a href="#section4">#</a></li>
             </ul><br>
@@ -64,19 +65,19 @@ $navbar = ob_get_clean();
         <div class="col-sm-9">
             <div class="well">
                 <h4>All Logs</h4>
-                <p>Some text..</p>
+                <p></p>
             </div>
         </div>
 
         <div class="col-sm-9">
-            <div class="well">
+            <div class="well">  
                 <div id="calendar"></div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Modal HTML (Bootstrap v3) -->
+
 <div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">

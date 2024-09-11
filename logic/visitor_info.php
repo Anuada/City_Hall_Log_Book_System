@@ -16,9 +16,10 @@ function uploadEvents($db)
     $fname = $_POST['fname'];
     $lname = $_POST['lname'];
     $purpose = $_POST['purpose'];
+    $type = $_POST['type'];
     $date = $_POST['date'];
 
-    if (empty(trim($fname)) && empty(trim($lname)) && empty(trim($purpose)) && empty(trim($date))) {
+    if (empty(trim($fname)) && empty(trim($lname)) && empty(trim($purpose)) && empty(trim($date)) && empty(trim($type))) {
         $_SESSION["m"] = "Fill out the missing fields!";
         header("Location: ../visitor/visitor_upload_info.php");
         exit();
@@ -30,6 +31,7 @@ function uploadEvents($db)
         "fname" => $fname,
         "lname" => $lname,
         "purpose" => $purpose,
+        "type" => $type,
         "date" => $date,
 
     );

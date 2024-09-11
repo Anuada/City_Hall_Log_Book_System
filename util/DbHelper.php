@@ -110,4 +110,22 @@ class DbHelper
         }
         return $rows;
     }
+
+    // All total of clients by monthly
+    public function allClients()
+    {
+        $sql = "SELECT 
+    DATE_FORMAT(date, '%Y-%m') AS log_month,
+    COUNT(id) AS client_count
+FROM 
+    visitor_info
+GROUP BY 
+    log_month
+ORDER BY 
+    log_month;
+";
+        $query = $this->conn->query($sql);
+        $client = (object) $query->fetch_assoc();
+        return $client->client;
+    }
 }

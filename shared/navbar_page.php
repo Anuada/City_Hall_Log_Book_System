@@ -18,7 +18,7 @@
     <!-- Navbar -->
 
     <div class="w3-top">
-        <div class="w3-bar w3-blue w3-wide w3-padding w3-card">
+        <div class="w3-bar w3-blue w3-wide w3-padding-large w3-card">
             <a href="../page/index.php" class="w3-bar-item w3-button"><b>Misc</b> Log Book </a>
 
 
