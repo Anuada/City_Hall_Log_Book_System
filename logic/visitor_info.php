@@ -27,23 +27,30 @@ function uploadEvents($db, $types)
         'type' => $type,
     ];
 
-    if (empty(trim($fname)) || empty(trim($lname)) || empty(trim($purpose)) || empty(trim($type))) {
-        $_SESSION["m"] = "Fill out the missing fields!";
+    $errorMessages = [];
+
+    foreach ($fieldInputs as $key => $value) {
+        if (empty(trim($value))) {
+            $errorMessages[$key] = field($key) . " Field Is Required";
+        }
+    }
+
+    if (!empty($errorMessages)) {
         $_SESSION["fieldInputs"] = $fieldInputs;
+        $_SESSION["errorMessages"] = $errorMessages;
         header("Location: ../visitor/visitor_upload_info.php");
         exit();
     }
 
     if (!in_array($type, $types)) {
-        $_SESSION["m"] = "Invalid Type!";
+        $errorMessages['type'] = "Invalid Type!";
+        $_SESSION["errorMessages"] = $errorMessages;
         $_SESSION["fieldInputs"] = $fieldInputs;
         header("Location: ../visitor/visitor_upload_info.php");
         exit();
     }
 
-    $table = "visitor_info";
-
-    $success = $db->addRecord($table, $fieldInputs);
+    $success = $db->addRecord("visitor_info", $fieldInputs);
 
     if ($success) {
         $_SESSION["m"] = "Visitor Logged Successfully";
@@ -53,4 +60,18 @@ function uploadEvents($db, $types)
 
     header("Location: ../visitor/visitor_upload_info.php");
     exit();
+}
+
+function field($key)
+{
+    switch ($key) {
+        case 'fname':
+            return 'First Name';
+
+        case 'lname':
+            return 'Last Name';
+
+        default:
+            return ucwords($key);
+    }
 }

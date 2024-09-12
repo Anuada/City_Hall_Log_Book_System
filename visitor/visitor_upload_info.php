@@ -15,6 +15,10 @@ $navbar = ob_get_clean();
 
 <?php ob_start() ?>
 <style>
+    .text-danger {
+        color: rgb(220 53 69);
+    }
+
     .div-margin-top {
         margin-top: 7%;
     }
@@ -31,16 +35,18 @@ $navbar = ob_get_clean();
 
 <div class="container div-margin-top">
     <h2>Log Book Form</h2>
-    <form action="../logic/visitor_info.php" method="post" enctype="multipart/form-data" id="submitformlegal">
+    <form action="../logic/visitor_info.php" method="post">
 
         <div class="form-group">
             <label for="fname">First Name</label>
-            <input type="text" class="form-control" id="fname" name="fname" placeholder="First Name" required>
+            <input type="text" class="form-control" id="fname" name="fname" placeholder="First Name">
+            <div class="form-text text-danger" id="errorFName"></div>
         </div>
 
         <div class="form-group">
             <label for="lname">Last Name</label>
-            <input type="text" class="form-control" id="lname" name="lname" placeholder="Last Name" required>
+            <input type="text" class="form-control" id="lname" name="lname" placeholder="Last Name">
+            <div class="form-text text-danger" id="errorLName"></div>
         </div>
 
         <div class="form-group">
@@ -51,12 +57,14 @@ $navbar = ob_get_clean();
                     <option value="<?php echo $type ?>"><?php echo $type ?></option>
                 <?php endforeach ?>
             </select>
+            <div class="form-text text-danger" id="errorType"></div>
         </div>
 
         <div class="form-group">
             <label for="purpose">Purpose</label>
-            <textarea class="form-control" id="purpose" name="purpose" placeholder="Enter your purpose here..." rows="4"
-                required></textarea>
+            <textarea class="form-control" id="purpose" name="purpose" placeholder="Enter your purpose here..."
+                rows="4"></textarea>
+            <div class="form-text text-danger" id="errorPurpose"></div>
         </div>
 
         <button type="submit" name="submit" class="btn btn-primary text-white">Submit Now</button>
@@ -81,6 +89,18 @@ ob_start();
     </script>
     <?php unset($_SESSION["fieldInputs"]) ?>
 <?php endif; ?>
+
+<?php if (isset($_SESSION["errorMessages"])): ?>
+    <script>
+        const errorMessages = <?php echo json_encode($_SESSION["errorMessages"]) ?>;
+        $("#errorFName").text(errorMessages.fname);
+        $("#errorLName").text(errorMessages.lname);
+        $("#errorType").text(errorMessages.type);
+        $("#errorPurpose").text(errorMessages.purpose);
+    </script>
+    <?php unset($_SESSION["errorMessages"]) ?>
+<?php endif; ?>
+
 <?php
 $scripts = ob_get_clean();
 require_once "../shared/layout.php";
