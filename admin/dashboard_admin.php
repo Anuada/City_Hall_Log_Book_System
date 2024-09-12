@@ -48,16 +48,21 @@ $navbar = ob_get_clean();
 
 <div class="container-fluid">
     <div class="row content">
-        <div class="col-sm-3 sidenav hidden-xs">
-            <h2>Logo</h2>
+    <div class="col-sm-3 sidenav hidden-xs">
+    <div class="card" style="width: 100%; border: 1px solid #ddd; border-radius: 5px; margin-top:20px;">
+        <img src="../assets/image/city_logo.svg" alt="Logo" class="card-img-top" style="max-width: 50%; height: auto; margin: 0 auto; display: block;">
+        
+    </div>
+    <br>
+    <ul class="nav nav-pills nav-stacked mt-3">
+        <li class="active"><a href="dashboard_admin.php">Dashboard</a></li>
+        <li><a href="all_info.php">Reports</a></li>
+        <li><a href="#section3">#</a></li>
+        <li><a href="#section4">#</a></li>
+    </ul>
+</div>
 
-            <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a href="dashboard_admin.php">Dashboard</a></li>
-                <li><a href="all_info.php">Reports</a></li>
-                <li><a href="#section3">#</a></li>
-                <li><a href="#section4">#</a></li>
-            </ul><br>
-        </div>
+
         <br>
 
         <div class="col-sm-9">
