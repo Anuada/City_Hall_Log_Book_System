@@ -5,11 +5,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE-edge, chrome=1.0, safari">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="../assets/img/logo/yt_final1.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/w3.css">
     <link rel="stylesheet" href="../assets/css/sweetalert2.min.css">
-    <link rel="stylesheet" href="../assets/css/custom.all.css">
     <link rel="stylesheet" href="../assets/css/loader.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
     <?php echo (isset($styles)) ? $styles : "" ?>
     <title>
         <?php echo (isset($title)) ? "Log Book | " . $title : "" ?>
@@ -32,9 +38,8 @@
     <?php echo $content ?>
 
     <!-- JS -->
-    <script src="../assets/js/jquery-3.7.1.slim.min.js"></script>
-    <script src="../assets/js/popper.min.js"></script>
-    <script src="../assets/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="../assets/js/sweetalert2.all.min.js"></script>
     <script src="../assets/js/loader.js"></script>
     <script src="../assets/js/formatter.js"></script>

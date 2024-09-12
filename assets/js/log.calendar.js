@@ -1,6 +1,6 @@
 // VARIABLES
 const calendarEl = document.getElementById('calendar');
-const currentMonthYearEl = document.getElementById('currentMonthYear');
+const currentMonthYearEl = document.getElementById('otherDetails');
 const modal = $('#eventModal');
 const modalBody = $('#modalBody');
 const modalText = $('#modalTitle');

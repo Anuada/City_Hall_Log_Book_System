@@ -6,18 +6,30 @@ require_once "../enums/Type.php";
 
 $db = new DbHelper();
 $types = array_column(Type::cases(), 'value');
-$title = "FORM";
-
+$title = "Log Form";
 
 ob_start();
-
+include "../shared/navbar_page.php";
+$navbar = ob_get_clean();
 ?>
-<?php include "../shared/navbar_page.php"; ?>
 
-<title><?php echo $title; ?></title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<?php ob_start() ?>
+<style>
+    .div-margin-top {
+        margin-top: 7%;
+    }
 
-<div class="container" style="margin-top:5%;">
+    @media (max-width: 768px) {
+        .div-margin-top {
+            margin-top: 13%;
+        }
+    }
+</style>
+<?php $styles = ob_get_clean() ?>
+
+<?php ob_start() ?>
+
+<div class="container div-margin-top">
     <h2>Log Book Form</h2>
     <form action="../logic/visitor_info.php" method="post" enctype="multipart/form-data" id="submitformlegal">
 
@@ -47,7 +59,7 @@ ob_start();
                 required></textarea>
         </div>
 
-        <button type="submit" name="submit" class="btn bg-fuchsia text-white">Submit Now</button>
+        <button type="submit" name="submit" class="btn btn-primary text-white">Submit Now</button>
     </form>
 </div>
 
