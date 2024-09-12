@@ -57,8 +57,6 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
 <?php $admin_content = ob_get_clean() ?>
 
 <?php ob_start() ?>
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script type="module" src="../assets/js/log.calendar.js"></script>
 <?php $scripts = ob_get_clean() ?>
 <?php require_once "../shared/sidebar.admin.php" ?>

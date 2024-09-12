@@ -1,4 +1,6 @@
 import formatDate from "./formatter.js";
+import { Calendar } from 'https://cdn.skypack.dev/fullcalendar';
+import axios from 'https://cdn.skypack.dev/axios';
 
 // VARIABLES
 const calendarEl = document.getElementById('calendar');
@@ -53,7 +55,7 @@ const handleDateClick = async (info) => {
 }
 
 // INITIALIZE THE FULLCALENDAR
-const calendar = new FullCalendar.Calendar(calendarEl, {
+const calendar = new Calendar(calendarEl, {
     initialView: 'dayGridMonth',
     events: '../response/logs.php',
     dayMaxEvents: 2,
