@@ -1,76 +1,70 @@
-const formatDate = (dateStr) => {
-    const date = new Date(dateStr);
+// VARIABLES
+const calendarEl = document.getElementById('calendar');
+const currentMonthYearEl = document.getElementById('currentMonthYear');
+const modal = $('#eventModal');
+const modalBody = $('#modalBody');
+const modalText = $('#modalTitle');
 
-    const options = { year: "numeric", month: "long", day: "numeric" };
-    return date.toLocaleDateString("en-US", options);
+// FUNCTIONS
+const updateMonthYearDisplay = async (calendar) => {
+    const view = calendar.view;
+    const startDate = view.currentStart;
+    const formattedDate = startDate.toLocaleDateString('en-CA', { year: 'numeric', month: '2-digit' });
+
+    const { data } = await axios.get('../response/monthlyLogsReports.php', { params: { month: formattedDate } });
+
+    currentMonthYearEl.innerHTML = `
+        <p>Employee Count: ${data.employee_count}</p>
+        <p>Visitor Count: ${data.visitor_count}</p>
+        `;
 };
 
-document.addEventListener('DOMContentLoaded', function () {
-    const calendarEl = document.getElementById('calendar');
+const handleDateClick = async (info) => {
+    const clickedDate = info.dateStr;
 
-    // Initialize the FullCalendar without events
-    const calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth', // Display type (e.g., month, week)
-        events: async function (fetchInfo, successCallback, failureCallback) {
-            try {
-                const response = await axios('../response/logs.php');
-                const events = await response.data;
+    const { data } = await axios.get('../response/logs.php');
 
-                // Filter events to display a maximum of 3 per day
-                const limitedEvents = events.reduce((acc, event) => {
-                    const date = formatDate(event.start);
-                    if (!acc[date]) {
-                        acc[date] = [];
-                    }
-                    if (acc[date].length < 3) {
-                        acc[date].push(event);
-                    }
-                    return acc;
-                }, {});
-
-                // Flatten the filtered events into a single array
-                const filteredEvents = Object.values(limitedEvents).flat();
-
-                successCallback(filteredEvents);
-            } catch (error) {
-                failureCallback(error);
-            }
-        },
-        selectable: true, // To allow date selection
-        dateClick: async (info) => {
-            let clickedDate = info.dateStr;
-
-            const events = await axios.get('../response/logs.php');
-
-            let eventsThisDay = events.data.filter((e) => {
-                return e.start === clickedDate;
-            });
-
-            // Populate the modal with events
-            let modalBody = $('#modalBody');
-            modalBody.empty();
-
-            if (eventsThisDay.length > 0) {
-                eventsThisDay.forEach((event) => {
-                    modalBody.append(`
-                        <tr>
-                            <td>${event.id}</td>
-                            <td>${event.title}</td>
-                            <td>${event.purpose}</td>
-                        </tr>
-                    `);
-                });
-            } else {
-                modalBody.append('<tr><td colspan="3" class="text-center">No logs on this day.</td></tr>');
-            }
-
-            $('#modalTitle').text(`Logs on ${formatDate(clickedDate)}`);
-
-            // Show the modal
-            $('#eventModal').modal('show');
-        }
+    const eventsThisDay = data.filter((e) => {
+        return e.start === clickedDate;
     });
 
-    // Render the calendar
-    calendar.render();
+    modalBody.empty();
+
+    if (eventsThisDay.length > 0) {
+        eventsThisDay.forEach((event) => {
+            modalBody.append(`
+                    <tr>
+                        <td>${event.id}</td>
+                        <td>${event.title}</td>
+                        <td>${event.purpose}</td>
+                        <td>${event.type}</td>
+                        <td>${event.time}</td>
+                    </tr>
+                `);
+        });
+    } else {
+        modalBody.append('<tr><td colspan="5" class="text-center">No logs on this day.</td></tr>');
+    }
+
+    modalText.text(`${eventsThisDay.length > 1 ? 'Logs' : 'Log'} on ${formatDate(clickedDate)}`);
+    modal.modal('show');
+}
+
+// INITIALIZE THE FULLCALENDAR
+const calendar = new FullCalendar.Calendar(calendarEl, {
+    initialView: 'dayGridMonth',
+    events: '../response/logs.php',
+    dayMaxEvents: 2,
+    selectable: true,
+    datesSet: async () => {
+        await updateMonthYearDisplay(calendar);
+    },
+    dateClick: async (info) => {
+        await handleDateClick(info);
+    }
 });
+
+document.addEventListener('DOMContentLoaded', async () => {
+    await updateMonthYearDisplay(calendar);
+    calendar.render();
+})

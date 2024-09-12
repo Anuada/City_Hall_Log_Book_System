@@ -2,9 +2,10 @@
 session_start();
 
 require_once "../util/DbHelper.php";
+require_once "../enums/Type.php";
 
 $db = new DbHelper();
-
+$types = array_column(Type::cases(), 'value');
 $title = "FORM";
 
 
@@ -31,16 +32,20 @@ ob_start();
         </div>
 
         <div class="form-group">
-            <label for="purpose">Purpose</label>
-            <textarea class="form-control" id="purpose" name="purpose" placeholder="Enter your purpose here..." rows="4" required></textarea>
+            <label for="type">Visitor Type</label>
+            <select name="type" id="type" class="form-control">
+                <option disabled>SELECT TYPE</option>
+                <?php foreach ($types as $type): ?>
+                    <option value="<?php echo $type ?>"><?php echo $type ?></option>
+                <?php endforeach ?>
+            </select>
         </div>
 
         <div class="form-group">
-            <label for="date">Date</label>
-            <input type="date" class="form-control" id="date" name="date" placeholder="Date" required>
+            <label for="purpose">Purpose</label>
+            <textarea class="form-control" id="purpose" name="purpose" placeholder="Enter your purpose here..." rows="4"
+                required></textarea>
         </div>
-
-
 
         <button type="submit" name="submit" class="btn bg-fuchsia text-white">Submit Now</button>
     </form>
@@ -53,6 +58,17 @@ ob_start();
 ?>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<?php if (isset($_SESSION["fieldInputs"])): ?>
+    <script>
+        const { fname, lname, type, purpose } = <?php echo json_encode($_SESSION["fieldInputs"]) ?>;
+        $("#fname").val(fname);
+        $("#lname").val(lname);
+        $("#type").val(type);
+        $("#purpose").val(purpose);
+    </script>
+    <?php unset($_SESSION["fieldInputs"]) ?>
+<?php endif; ?>
 <?php
 $scripts = ob_get_clean();
 require_once "../shared/layout.php";

@@ -9,7 +9,6 @@ $start = ($page - 1) * $recordsPerPage;
 $visitor = $db->fetchRecords_limit("visitor_info", $start, $recordsPerPage);
 $totalRecords = $db->fetchTotalRecords("visitor_info");
 $totalPages = ceil($totalRecords / $recordsPerPage);
-$allClients = $db->allClients();
 
 $title = "City Hall";
 $load = false;
@@ -68,7 +67,7 @@ $navbar = ob_get_clean();
         <div class="col-sm-9">
             <div class="well">
                 <h4>All Logs</h4>
-                <p></p>
+                <p id="currentMonthYear"></p>
             </div>
         </div>
 
@@ -95,6 +94,8 @@ $navbar = ob_get_clean();
                             <th>ID</th>
                             <th>Name</th>
                             <th>Purpose</th>
+                            <th>Type</th>
+                            <th>Time</th>
                         </tr>
                     </thead>
                     <tbody id="modalBody">

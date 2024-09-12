@@ -102,7 +102,7 @@ class DbHelper
 
     public function getAllLogs()
     {
-        $sql = "SELECT `id`, CONCAT(`fname`,' ',`lname`) AS `title`, `purpose`, `date` AS `start`, `date` AS `end` FROM `visitor_info`";
+        $sql = "SELECT `id`, CONCAT(`fname`,' ',`lname`) AS `title`, `purpose`, `type`, DATE_FORMAT(`date`, '%Y-%m-%d') AS `start`, DATE_FORMAT(`date`, '%Y-%m-%d') AS `end`, DATE_FORMAT(`date`, '%I:%i %p') AS `time` FROM `visitor_info`";
         $query = $this->conn->query($sql);
         $rows = [];
         while ($row = $query->fetch_assoc()) {
@@ -112,20 +112,17 @@ class DbHelper
     }
 
     // All total of clients by monthly
-    public function allClients()
+    public function allClients($month)
     {
         $sql = "SELECT 
-    DATE_FORMAT(date, '%Y-%m') AS log_month,
-    COUNT(id) AS client_count
-FROM 
-    visitor_info
-GROUP BY 
-    log_month
-ORDER BY 
-    log_month;
-";
+                    COUNT(CASE WHEN type = 'Employee' THEN 1 END) AS employee_count,
+                    COUNT(CASE WHEN type = 'Visitor' THEN 1 END) AS visitor_count
+                FROM 
+                    visitor_info
+                WHERE
+                    DATE_FORMAT(date, '%Y-%m') = '$month'
+                ";
         $query = $this->conn->query($sql);
-        $client = (object) $query->fetch_assoc();
-        return $client->client;
+        return $query->fetch_assoc();
     }
 }

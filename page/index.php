@@ -25,10 +25,6 @@ $navbar = ob_get_clean();
         <a href="../visitor/visitor_upload_info.php" class="w3-bar-item w3-button">Visitor</a>
 
     </div>
-    <div class="w3-bar w3-blue w3-wide w3-padding w3-card" style="margin-left:10px;">
-        <a href="../visitor/employee_upload_info.php" class="w3-bar-item w3-button">Employee</a>
-
-    </div>
 </div>
 
 
