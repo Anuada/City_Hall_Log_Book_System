@@ -1,3 +1,5 @@
+import formatDate from "./formatter.js";
+
 // VARIABLES
 const calendarEl = document.getElementById('calendar');
 const currentMonthYearEl = document.getElementById('otherDetails');
@@ -33,14 +35,14 @@ const handleDateClick = async (info) => {
     if (eventsThisDay.length > 0) {
         eventsThisDay.forEach((event) => {
             modalBody.append(`
-                    <tr>
-                        <td>${event.id}</td>
-                        <td>${event.title}</td>
-                        <td>${event.purpose}</td>
-                        <td>${event.type}</td>
-                        <td>${event.time}</td>
-                    </tr>
-                `);
+                <tr>
+                    <td>${event.id}</td>
+                    <td>${event.title}</td>
+                    <td>${event.purpose}</td>
+                    <td>${event.type}</td>
+                    <td>${event.time}</td>
+                </tr>
+            `);
         });
     } else {
         modalBody.append('<tr><td colspan="5" class="text-center">No logs on this day.</td></tr>');
