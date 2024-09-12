@@ -12,7 +12,7 @@ if (isset($_POST['submit'])) {
     uploadEvents($db, $types);
 }
 
-function uploadEvents($db, $types)
+function uploadEvents(DbHelper $db, array $types)
 {
 
     $fname = $_POST['fname'];
@@ -62,7 +62,7 @@ function uploadEvents($db, $types)
     exit();
 }
 
-function field($key)
+function field(string $key)
 {
     switch ($key) {
         case 'fname':
