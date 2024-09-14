@@ -31,20 +31,26 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                         aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="modalTitle"></h4>
             </div>
-            <div class="modal-body table-responsive">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Purpose</th>
-                            <th>Type</th>
-                            <th>Time</th>
-                        </tr>
-                    </thead>
-                    <tbody id="modalBody">
-                    </tbody>
-                </table>
+            <div class="modal-body">
+                <div class="mb-5">
+                    <input type="search" name="search" id="search" class="form-control" placeholder="Search...">
+                </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Purpose</th>
+                                <th>Type</th>
+                                <th>Time</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="modalBody">
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

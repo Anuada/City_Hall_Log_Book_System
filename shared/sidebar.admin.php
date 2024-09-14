@@ -21,10 +21,10 @@ $title = "City Hall";
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
-                <li <?php echo Misc::url() == Misc::url('admin/dashboard_admin.php') ? 'class="active"class="active"' : '' ?>>
+                <li <?php echo Misc::url() == Misc::url('admin/dashboard_admin.php') ? 'class="active"' : '' ?>>
                     <a href="<?php echo Misc::url('admin/dashboard_admin.php') ?>">Dashboard</a>
                 </li>
-                <li <?php echo Misc::url() == Misc::url('admin/all_info.php') ? 'class="active"class="active"' : '' ?>><a
+                <li <?php echo Misc::url() == Misc::url('admin/all_info.php') ? 'class="active"' : '' ?>><a
                         href="<?php echo Misc::url('admin/all_info.php') ?>">Reports</a></li>
             </ul>
         </div>

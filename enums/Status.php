@@ -2,10 +2,11 @@
 
 require_once "../util/Misc.php";
 
-enum Type: string
+enum Status: string
 {
-    case Employee = 'Employee';
-    case Visitor = 'Visitor';
+    case Pending = 'Pending';
+    case Accepted = 'Accepted';
+    case Cancelled = 'Cancelled';
 
     public static function all()
     {

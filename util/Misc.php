@@ -37,4 +37,9 @@ class Misc
         return $img_file;
     }
 
+    public static function displayEnums(array $enums)
+    {
+        return array_column($enums, 'value');
+    }
+
 }

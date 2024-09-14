@@ -102,7 +102,7 @@ class DbHelper
 
     public function getAllLogs()
     {
-        $sql = "SELECT `id`, CONCAT(`fname`,' ',`lname`) AS `title`, `purpose`, `type`, DATE_FORMAT(`date`, '%Y-%m-%d') AS `start`, DATE_FORMAT(`date`, '%Y-%m-%d') AS `end`, DATE_FORMAT(`date`, '%I:%i %p') AS `time` FROM `visitor_info`";
+        $sql = "SELECT `id`, CONCAT(`fname`,' ',`lname`) AS `title`, `purpose`, `type`, `status`, DATE_FORMAT(`date`, '%Y-%m-%d') AS `start`, DATE_FORMAT(`date`, '%Y-%m-%d') AS `end`, DATE_FORMAT(`date`, '%I:%i %p') AS `time` FROM `visitor_info`";
         $query = $this->conn->query($sql);
         $rows = [];
         while ($row = $query->fetch_assoc()) {
@@ -120,7 +120,7 @@ class DbHelper
                 FROM 
                     visitor_info
                 WHERE
-                    DATE_FORMAT(date, '%Y-%m') = '$month'
+                    DATE_FORMAT(date, '%Y-%m') = '$month' AND status = 'Accepted'
                 ";
         $query = $this->conn->query($sql);
         return $query->fetch_assoc();

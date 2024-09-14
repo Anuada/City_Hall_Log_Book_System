@@ -1,13 +1,17 @@
 import formatDate from "./formatter.js";
 import { Calendar } from 'https://cdn.skypack.dev/fullcalendar';
 import axios from 'https://cdn.skypack.dev/axios';
+import { confirmAlert, errorAlert, successAlert } from "./libs/sweetAlert2.js";
 
 // VARIABLES
 const calendarEl = document.getElementById('calendar');
 const currentMonthYearEl = document.getElementById('otherDetails');
+const search = document.getElementById('search');
 const modal = $('#eventModal');
 const modalBody = $('#modalBody');
 const modalText = $('#modalTitle');
+
+let eventsThisDay = [];
 
 // FUNCTIONS
 const updateMonthYearDisplay = async (calendar) => {
@@ -28,14 +32,35 @@ const handleDateClick = async (info) => {
 
     const { data } = await axios.get('../response/logs.php');
 
-    const eventsThisDay = data.filter((e) => {
+    eventsThisDay = data.filter((e) => {
         return e.start === clickedDate;
     });
 
-    modalBody.empty();
+    displayTable(eventsThisDay);
 
-    if (eventsThisDay.length > 0) {
-        eventsThisDay.forEach((event) => {
+    modalText.text(`${eventsThisDay.length > 1 ? 'Logs' : 'Log'} on ${formatDate(clickedDate)}`);
+
+}
+
+search.addEventListener('input', () => {
+    const query = search.value.toLowerCase();
+    const filteredLogs = eventsThisDay.filter(e => {
+        return e.id.toLowerCase().includes(query) ||
+            e.title.toLowerCase().includes(query) ||
+            e.purpose.toLowerCase().includes(query) ||
+            e.type.toLowerCase().includes(query) ||
+            e.status.toLowerCase().includes(query) ||
+            e.time.toLowerCase().includes(query);
+    });
+
+    displayTable(filteredLogs);
+
+})
+
+const displayTable = async (data) => {
+    modalBody.empty();
+    if (data.length > 0) {
+        data.forEach((event) => {
             modalBody.append(`
                 <tr>
                     <td>${event.id}</td>
@@ -43,15 +68,59 @@ const handleDateClick = async (info) => {
                     <td>${event.purpose}</td>
                     <td>${event.type}</td>
                     <td>${event.time}</td>
+                    <td class="text-center">
+                        ${event.status !== 'Pending' ? `
+                            ${event.status}
+                            ` : `
+                            <select class="form-control">
+                                <option disabled selected>${event.status}</option>
+                                <option data-id="${event.id}" data-status="Accepted">Accept</option>
+                                <option data-id="${event.id}" data-status="Cancelled">Cancel</option>
+                            </select>
+                            `}
+                    </td>
                 </tr>
             `);
         });
     } else {
-        modalBody.append('<tr><td colspan="5" class="text-center">No logs on this day.</td></tr>');
+        modalBody.append('<tr><td colspan="6" class="text-center">No logs found</td></tr>');
     }
 
-    modalText.text(`${eventsThisDay.length > 1 ? 'Logs' : 'Log'} on ${formatDate(clickedDate)}`);
     modal.modal('show');
+}
+
+document.addEventListener('change', (e) => {
+    const statusChange = e.target.closest('.form-control');
+    if (statusChange) {
+        const selectedOption = statusChange.querySelector('option:checked');
+        const id = selectedOption.getAttribute('data-id');
+        const status = selectedOption.getAttribute('data-status');
+        const payload = {
+            id: id,
+            status: status
+        };
+        handleConfirmChangeStatus(payload);
+    }
+})
+
+const handleConfirmChangeStatus = async (payload) => {
+    const question = "Are you sure you want to change the status of this log?";
+    confirmAlert(question, handleChangeStatus, payload);
+}
+
+const handleChangeStatus = async (payload) => {
+    try {
+        const { data } = await axios.post('../response/changeStatus.php', payload);
+        if (data.success == true) {
+            successAlert(data.message);
+            await updateMonthYearDisplay(calendar);
+            modal.modal('hide');
+        } else {
+            errorAlert(data.message);
+        }
+    } catch (error) {
+        console.error(error);
+    }
 }
 
 // INITIALIZE THE FULLCALENDAR
