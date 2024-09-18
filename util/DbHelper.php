@@ -102,7 +102,7 @@ class DbHelper
 
     public function getAllLogs()
     {
-        $sql = "SELECT `id`, CONCAT(`fname`,' ',`lname`) AS `title`, `purpose`, `type`, `status`, DATE_FORMAT(`date`, '%Y-%m-%d') AS `start`, DATE_FORMAT(`date`, '%Y-%m-%d') AS `end`, DATE_FORMAT(`date`, '%I:%i %p') AS `time` FROM `visitor_info`";
+        $sql = "SELECT `id`, CONCAT(`fname`,' ',`lname`) AS `title`, `purpose`, `type`, `status`,`office`, DATE_FORMAT(`date`, '%Y-%m-%d') AS `start`, DATE_FORMAT(`date`, '%Y-%m-%d') AS `end`, DATE_FORMAT(`date`, '%I:%i %p') AS `time` FROM `visitor_info`";
         $query = $this->conn->query($sql);
         $rows = [];
         while ($row = $query->fetch_assoc()) {

@@ -67,6 +67,7 @@ const displayTable = async (data) => {
                     <td>${event.title}</td>
                     <td>${event.purpose}</td>
                     <td>${event.type}</td>
+                    <td>${event.office}</td>
                     <td>${event.time}</td>
                     <td class="text-center">
                         ${event.status !== 'Pending' ? `

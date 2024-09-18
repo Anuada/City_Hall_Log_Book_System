@@ -19,12 +19,14 @@ function uploadEvents(DbHelper $db, array $types)
     $lname = $_POST['lname'];
     $purpose = $_POST['purpose'];
     $type = $_POST['type'];
+    $office = $_POST['office'];
 
     $fieldInputs = [
         'fname' => $fname,
         'lname' => $lname,
         'purpose' => $purpose,
         'type' => $type,
+        'office' => $office,
     ];
 
     $errorMessages = [];

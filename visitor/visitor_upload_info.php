@@ -37,6 +37,26 @@ $navbar = ob_get_clean();
     <h2>Log Book Form</h2>
     <form action="../logic/visitor_info.php" method="post">
 
+    <div class="form-group">
+            <label for="type">Visitor Type</label>
+            <select name="type" id="type" class="form-control">
+                <option disabled>SELECT TYPE</option>
+                <?php foreach ($types as $type): ?>
+                    <option value="<?php echo $type ?>"><?php echo $type ?></option>
+                <?php endforeach ?>
+            </select>
+            <div class="form-text text-danger" id="errorType"></div>
+        </div>
+
+        <div class="form-group">
+    <label for="type">Select Type of Office</label>
+    <select id="office" name="office" class="form-control">
+        <option value="Office1">Office1</option>
+        <option value="Office2">Office2</option>
+    </select>
+    <div class="form-text text-danger" id="errorType"></div>
+</div>
+
         <div class="form-group">
             <label for="fname">First Name</label>
             <input type="text" class="form-control" id="fname" name="fname" placeholder="First Name">
@@ -47,17 +67,6 @@ $navbar = ob_get_clean();
             <label for="lname">Last Name</label>
             <input type="text" class="form-control" id="lname" name="lname" placeholder="Last Name">
             <div class="form-text text-danger" id="errorLName"></div>
-        </div>
-
-        <div class="form-group">
-            <label for="type">Visitor Type</label>
-            <select name="type" id="type" class="form-control">
-                <option disabled>SELECT TYPE</option>
-                <?php foreach ($types as $type): ?>
-                    <option value="<?php echo $type ?>"><?php echo $type ?></option>
-                <?php endforeach ?>
-            </select>
-            <div class="form-text text-danger" id="errorType"></div>
         </div>
 
         <div class="form-group">

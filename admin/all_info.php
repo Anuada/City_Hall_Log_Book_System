@@ -43,6 +43,7 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                                 <th>Name</th>
                                 <th>Purpose</th>
                                 <th>Type</th>
+                                <th> office</th>
                                 <th>Time</th>
                                 <th>Status</th>
                             </tr>
