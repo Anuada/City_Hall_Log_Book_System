@@ -8,7 +8,7 @@ header("Content-Type: application/json");
 
 if (!isset($_GET['id']) || empty(trim($_GET['id']))) {
     http_response_code(422);
-    echo json_encode(['message' => 'fill out the \'id\' parameter']);
+    echo json_encode(['message' => 'employee id is required']);
     exit();
 }
 

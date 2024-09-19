@@ -9,7 +9,7 @@ header("Content-Type: application/json");
 if (!isset($_GET['month'])) {
     http_response_code(404);
     echo json_encode('Input the month');
-
+    exit();
 }
 $month = $_GET['month'];
 

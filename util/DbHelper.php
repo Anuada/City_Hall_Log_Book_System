@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * The **`DbHelper`** class is a utility for interacting with a **`MySQL`** database using the mysqli extension. It provides methods for basic CRUD operations and specific queries related to a visitor logging system.
+ */
 class DbHelper
 {
     private string $hostname = "127.0.0.1";

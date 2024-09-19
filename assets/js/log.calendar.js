@@ -19,7 +19,7 @@ const updateMonthYearDisplay = async (calendar) => {
     const startDate = view.currentStart;
     const formattedDate = startDate.toLocaleDateString('en-CA', { year: 'numeric', month: '2-digit' });
 
-    const { data } = await axios.get('../response/monthlyLogsReports.php', { params: { month: formattedDate } });
+    const { data } = await axios.get('../api/monthlyLogsReports.php', { params: { month: formattedDate } });
 
     currentMonthYearEl.innerHTML = `
         <p>Employee Count: ${data.employee_count}</p>
@@ -30,7 +30,7 @@ const updateMonthYearDisplay = async (calendar) => {
 const handleDateClick = async (info) => {
     const clickedDate = info.dateStr;
 
-    const { data } = await axios.get('../response/logs.php');
+    const { data } = await axios.get('../api/logs.php');
 
     eventsThisDay = data.filter((e) => {
         return e.start === clickedDate;
@@ -111,7 +111,7 @@ const handleConfirmChangeStatus = async (payload) => {
 
 const handleChangeStatus = async (payload) => {
     try {
-        const { data } = await axios.post('../response/changeStatus.php', payload);
+        const { data } = await axios.post('../api/changeStatus.php', payload);
         if (data.success == true) {
             successAlert(data.message);
             await updateMonthYearDisplay(calendar);
@@ -127,7 +127,7 @@ const handleChangeStatus = async (payload) => {
 // INITIALIZE THE FULLCALENDAR
 const calendar = new Calendar(calendarEl, {
     initialView: 'dayGridMonth',
-    events: '../response/logs.php',
+    events: '../api/logs.php',
     dayMaxEvents: 2,
     selectable: true,
     datesSet: async () => {

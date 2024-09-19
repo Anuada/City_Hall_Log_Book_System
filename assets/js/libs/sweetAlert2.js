@@ -1,5 +1,9 @@
 import sweetalert2 from 'https://cdn.skypack.dev/sweetalert2';
 
+/**
+ * Displays a success alert with a custom message.
+ * @param {*} message The message to display in the success alert.
+ */
 export const successAlert = (message) => {
     sweetalert2.fire({
         icon: "success",
@@ -10,6 +14,10 @@ export const successAlert = (message) => {
     });
 };
 
+/**
+ * Displays an error alert with a custom message.
+ * @param {*} message The message to display in the error alert.
+ */
 export const errorAlert = (message) => {
     sweetalert2.fire({
         icon: "error",
@@ -20,6 +28,12 @@ export const errorAlert = (message) => {
     });
 };
 
+/**
+ * Shows a confirmation dialog with a question, and executes a provided action if confirmed.
+ * @param {*} question The question to ask in the confirmation dialog.
+ * @param {*} action The function to execute if the user confirms.
+ * @param  {...any} actionArgs Arguments to pass to the `action` function.
+ */
 export const confirmAlert = (question, action, ...actionArgs) => {
     sweetalert2.fire({
         title: question,

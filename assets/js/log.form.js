@@ -7,6 +7,7 @@ import { strReplace, ucWords } from './function/formatter.js';
 const [employee_info, visitor_info, employeeInfoContainer] = ['employee_info', 'visitor_info', 'employeeInfoContainer'].map(e => document.getElementById(e));
 const [log_form, type, purpose, employee_id, office] = ['log_form', 'type', 'purpose', 'employee_id', 'office'].map(e => document.getElementById(e));
 const [errorType, errorOffice, errorEmployeeId, errorFName, errorLName, errorPurpose] = ['errorType', 'errorOffice', 'errorEmployeeId', 'errorFName', 'errorLName', 'errorPurpose'].map(e => document.getElementById(e));
+let types = [];
 
 // EVENT LISTENERS
 type.addEventListener('change', (e) => {
@@ -14,6 +15,7 @@ type.addEventListener('change', (e) => {
     if (selectedType == 'Employee') {
         employee_info.style.display = 'block';
         visitor_info.style.display = 'none';
+        errorType.textContent = '';
 
         if (office.value != '') {
             purpose.value = `Work at the ${ucWords(strReplace(office.value))}`;
@@ -23,12 +25,19 @@ type.addEventListener('change', (e) => {
     } else if (selectedType == 'Visitor') {
         visitor_info.style.display = 'block';
         employee_info.style.display = 'none';
+        errorType.textContent = '';
 
         if (office.value != '') {
             purpose.value = `Visit the ${ucWords(strReplace(office.value))}`;
         } else {
             purpose.value = 'Visit';
         }
+    } else if (!types.includes(selectedType)) {
+        errorType.textContent = 'invalid type';
+        const options = ['<option disabled selected hidden>SELECT TYPE</option>']
+            .concat(types.map(opt => `<option value="${opt}">${opt}</option>`))
+            .join('');
+        type.innerHTML = options;
     }
 });
 
@@ -36,7 +45,7 @@ log_form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const payload = serializeForm(log_form);
     try {
-        const { data } = await axios.post('../response/logVisitor.php', payload);
+        const { data } = await axios.post('../api/logVisitor.php', payload);
         successAlert(data.message);
         log_form.reset();
         employee_info.style.display = 'none';
@@ -73,18 +82,20 @@ office.addEventListener('change', (e) => {
 
 employee_id.addEventListener('change', (e) => {
     const id = e.target.value;
-    employeeInfoContainer.style.display = 'block';
     getEmployeeInfo(id);
 });
 
 // FUNCTIONS
 const getEmployeeInfo = async (id) => {
     try {
-        const { data } = await axios.get('../response/findEmployee.php', { params: { id: id } });
+        const { data } = await axios.get('../api/findEmployee.php', { params: { id: id } });
+        employeeInfoContainer.style.display = 'block';
+        errorEmployeeId.textContent = '';
         displayEmployeeInfo(data.data);
     } catch (error) {
         const { response } = error;
-        displayEmployeeInfo(response.data.message);
+        employeeInfoContainer.style.display = 'none';
+        errorEmployeeId.textContent = response.data.message;
     }
 }
 
@@ -94,3 +105,12 @@ const displayEmployeeInfo = (data) => {
         <input type="text" class="form-control" value="${data}" disabled>
     `;
 }
+
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        const { data } = await axios.get('../api/typesEnums.php');
+        types = data;
+    } catch (error) {
+        console.error(error);
+    }
+})
