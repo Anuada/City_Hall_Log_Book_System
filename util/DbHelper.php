@@ -2,11 +2,11 @@
 
 class DbHelper
 {
-    private $hostname = "127.0.0.1";
-    private $username = "root";
-    private $password = "";
-    private $database = "city_log_booksystem";
-    private $conn;
+    private string $hostname = "127.0.0.1";
+    private string $username = "root";
+    private string $password = "";
+    private string $database = "city_log_booksystem";
+    private mysqli $conn;
 
     public function __construct()
     {
@@ -18,13 +18,16 @@ class DbHelper
         $this->conn->close();
     }
 
-
-
-    public function fetchRecords_limit($table, $start = 0, $limit = 10)
+    /**
+     * The **`fetchRecords`** function retrieves all records from a specified database table.
+     * 
+     * @param string $table The name of the table to fetch records from.
+     * @return array 
+     */
+    public function fetchRecords(string $table): array
     {
-        $sql = "SELECT * FROM `$table` LIMIT ?, ?";
+        $sql = "SELECT * FROM `$table`";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("ii", $start, $limit);
         $stmt->execute();
         $result = $stmt->get_result();
         $rows = [];
@@ -34,33 +37,49 @@ class DbHelper
         return $rows;
     }
 
-
-
-
-    public function fetchTotalRecords($table)
+    /**
+     * The **`fetchRecord`** function retrieves a single record from a specified table based on the provided conditions.
+     * 
+     * @param string $table The name of the table to fetch the record from.
+     * @param array $args An associative array of column names and their corresponding values, used to build the **`WHERE`** clause of the query.
+     * @return array|bool|null
+     */
+    public function fetchRecord(string $table, array $args): array|bool|null
     {
-        $sql = "SELECT COUNT(*) as count FROM `$table`";
-        $result = $this->conn->query($sql);
-        $row = $result->fetch_assoc();
-        return $row['count'];
+        $keys = array_keys($args);
+        $values = array_values($args);
+        $condition = $this->condition($keys, $values, 0, " AND ");
+        $sql = "SELECT * FROM `$table` WHERE $condition";
+        $query = $this->conn->query($sql);
+        $row = $query->fetch_assoc();
+        return $row;
     }
 
-
-    #Delete record/s
-
-
-    public function deleteRecord($table, $args)
+    /**
+     * The **`deleteRecord`** function deletes a record from a specified table based on the given conditions and returns the number of affected rows.
+     * 
+     * @param string $table The name of the table from which to delete the record.
+     * @param array $args An associative array of column names and values used to build the **`WHERE`** clause for deletion.
+     * @return int|string
+     */
+    public function deleteRecord(string $table, array $args): int|string
     {
         $key = array_keys($args);
         $value = array_values($args);
-        $condition = $this->condition($key, $value, "0", " AND ");
+        $condition = $this->condition($key, $value, 0, " AND ");
         $sql = "DELETE FROM `$table` WHERE $condition";
         $this->conn->query($sql);
         return $this->conn->affected_rows;
     }
 
-    #Add record/s
-    public function addRecord($table, $args)
+    /**
+     * The **`addRecord`** function inserts a new record into a specified table using the provided data and returns the number of affected rows.
+     * 
+     * @param string $table The name of the table where the new record will be inserted.
+     * @param array $args An associative array of column names and values to insert into the table.
+     * @return int|string
+     */
+    public function addRecord(string $table, array $args): int|string
     {
         $key = array_keys($args);
         $value = array_values($args);
@@ -71,17 +90,27 @@ class DbHelper
         return $this->conn->affected_rows;
     }
 
-    #Update record/s
-    public function updateRecord($table, $args)
+    /**
+     * The **`updateRecord`** function updates an existing record in a specified table based on the provided data and returns the number of affected rows.
+     * 
+     * @param string $table The name of the table where the record will be updated.
+     * @param array $args An associative array of column names and values. The first key-value pair is used as the **`WHERE`** condition, while the rest are used to update the record.
+     * @return int|string
+     */
+    public function updateRecord(string $table, array $args): int|string
     {
         $key = array_keys($args);
         $value = array_values($args);
-        $set = $this->condition($key, $value, "1", ", ");
+        $set = $this->condition($key, $value, 1, ", ");
         $sql = "UPDATE `$table` SET $set WHERE `$key[0]` = '$value[0]'";
         $this->conn->query($sql);
         return $this->conn->affected_rows;
     }
 
+    /**
+     * Get the current year
+     * @return int|string
+     */
     public function getCurrentYear()
     {
         $sql = "SELECT CURRENT_DATE AS `currentDate`";
@@ -90,7 +119,17 @@ class DbHelper
         $year = date("Y", strtotime($date["currentDate"]));
         return $year;
     }
-    private function condition($key, $value, $index, $implode)
+
+    /**
+     * The **`condition`** function generates a conditional SQL-like string based on key-value pairs. It takes four parameters:
+     *
+     * @param array $key an array of keys (likely representing column names),
+     * @param array $value an array of corresponding values,
+     * @param int $index the starting point from which to begin constructing the condition,
+     * @param string $implode a string that is used to concatenate the conditions (such as AND or OR).
+     * @return string
+     */
+    private function condition(array $key, array $value, int $index, string $implode): string
     {
         $condition = [];
         for ($i = $index; $i < count($key); $i++) {
@@ -100,9 +139,26 @@ class DbHelper
         return $cond;
     }
 
-    public function getAllLogs()
+    /**
+     * The **`getAllLogs`** function retrieves and returns all visitor logs from the database, including details such as visitor name, purpose, type, status, office, date, and time.
+     * @return array
+     */
+    public function getAllLogs(): array
     {
-        $sql = "SELECT `id`, CONCAT(`fname`,' ',`lname`) AS `title`, `purpose`, `type`, `status`,`office`, DATE_FORMAT(`date`, '%Y-%m-%d') AS `start`, DATE_FORMAT(`date`, '%Y-%m-%d') AS `end`, DATE_FORMAT(`date`, '%I:%i %p') AS `time` FROM `visitor_info`";
+        $sql = "SELECT 
+                    `v`.`id`, 
+                    CONCAT(COALESCE(NULLIF(`v`.`fname`,''), `e`.`fname`), ' ', COALESCE(NULLIF(`v`.`lname`,''), `e`.`lname`)) AS `title`,
+                    `v`.`purpose`, 
+                    `v`.`type`, 
+                    `v`.`status`,
+                    `v`.`office`, 
+                    DATE_FORMAT(`v`.`date`, '%Y-%m-%d') AS `start`, 
+                    DATE_FORMAT(`v`.`date`, '%Y-%m-%d') AS `end`, 
+                    DATE_FORMAT(`v`.`date`, '%I:%i %p') AS `time` 
+                FROM `visitor_info` `v`
+                LEFT JOIN `employee_info` `e`
+                ON `v`.`employee_id` = `e`.`tin_number`
+                ";
         $query = $this->conn->query($sql);
         $rows = [];
         while ($row = $query->fetch_assoc()) {
@@ -111,8 +167,13 @@ class DbHelper
         return $rows;
     }
 
-    // All total of clients by monthly
-    public function allClients($month)
+    /**
+     * The **`allClients`** function retrieves the count of accepted employees and visitors for a given month.
+     * 
+     * @param string $month The month and year in the format **`'YYYY-MM'`** to filter the records.
+     * @return array|bool|null
+     */
+    public function allClients(string $month): array|bool|null
     {
         $sql = "SELECT 
                     COUNT(CASE WHEN type = 'Employee' THEN 1 END) AS employee_count,

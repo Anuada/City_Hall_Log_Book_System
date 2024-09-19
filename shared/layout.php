@@ -36,9 +36,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="../assets/js/sweetalert2.all.min.js"></script>
     <script src="../assets/js/loader.js"></script>
-    <!-- <script src="../assets/js/formatter.js"></script> -->
-
-    <!-- <script src="../assets/js/prompt.js"></script> -->
 
     <?php if (isset($_SESSION["m"])): ?>
         <?php

@@ -1,14 +1,6 @@
 <?php
 session_start();
-require_once "../util/DbHelper.php";
 
-$db = new DbHelper();
-$page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
-$recordsPerPage = 10;
-$start = ($page - 1) * $recordsPerPage;
-$visitor = $db->fetchRecords_limit("visitor_info", $start, $recordsPerPage);
-$totalRecords = $db->fetchTotalRecords("visitor_info");
-$totalPages = ceil($totalRecords / $recordsPerPage);
 ?>
 
 <?php ob_start() ?>

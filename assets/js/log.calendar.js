@@ -1,4 +1,4 @@
-import formatDate from "./formatter.js";
+import { formatDate } from "./function/formatter.js";
 import { Calendar } from 'https://cdn.skypack.dev/fullcalendar';
 import axios from 'https://cdn.skypack.dev/axios';
 import { confirmAlert, errorAlert, successAlert } from "./libs/sweetAlert2.js";

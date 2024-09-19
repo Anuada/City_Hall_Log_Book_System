@@ -1,86 +1,67 @@
--- phpMyAdmin SQL Dump
--- version 5.2.1
--- https://www.phpmyadmin.net/
---
--- Host: 127.0.0.1
--- Generation Time: Sep 18, 2024 at 03:28 AM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Database: `city_log_booksystem`
---
-
+-- --------------------------------------------------------
+-- Host:                         127.0.0.1
+-- Server version:               8.0.30 - MySQL Community Server - GPL
+-- Server OS:                    Win64
+-- HeidiSQL Version:             12.1.0.6537
 -- --------------------------------------------------------
 
---
--- Table structure for table `visitor_info`
---
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-CREATE TABLE `visitor_info` (
-  `id` int(11) NOT NULL,
-  `fname` varchar(100) NOT NULL,
-  `lname` varchar(100) NOT NULL,
+-- Dumping structure for table city_log_booksystem.employee_info
+CREATE TABLE IF NOT EXISTS `employee_info` (
+  `tin_number` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `fname` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `lname` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  PRIMARY KEY (`tin_number`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Dumping data for table city_log_booksystem.employee_info: ~5 rows (approximately)
+INSERT INTO `employee_info` (`tin_number`, `fname`, `lname`) VALUES
+	('235-874-619-342', 'Torya', 'Bulacao'),
+	('501-279-463-158', 'Nicki', 'Minaj'),
+	('674-983-204-751', 'Ice', 'Spice'),
+	('849-356-712-934', 'Lady', 'Gaga'),
+	('890-456-321-987', 'Ariana', 'Grande');
+
+-- Dumping structure for table city_log_booksystem.visitor_info
+CREATE TABLE IF NOT EXISTS `visitor_info` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `employee_id` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
+  `fname` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
+  `lname` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
   `purpose` varchar(100) NOT NULL,
+  `office` enum('Sangguniang Panlungsod','PARKS & PLAYGROUND','OFFICE OF THE CITY VICE-MAYOR','OFFICE OF THE CITY MAYOR','OFFICE OF THE CITY CIVIL REGISTRAR (OCCR)','OFFICE OF THE CITY ASSESSORS','OFFICE OF THE CITY ADMINISTRATOR','OFFICE OF THE CITY ACCOUNTANT','OFFICE OF THE BUILDING OFFICIAL (OBO)','OFFICE OF CITY BUDGET','MANAGEMENT INFORMATION & COMPUTER SERVICES (MICS)','LOCAL SCHOOL BOARD(LSB)','Invitation to BID (Notice of Auction Sale)','INTERNAL AUDIT SERVICE OFFICE (IASO)','HUMAN RESOURCE AND DEVELOPMENT OFFICE (HRDO)','DEPARTMENT OF VETERINARY MEDICINE & FISHERIES (DVMF)','DEPARTMENT OF SOCIAL WELFARE AND SERVICES (DSWS)','DEPARTMENT OF PUBLIC SERVICES (DPS)','DEPARTMENT OF MANPOWER DEVELOPMENT AND PLACEMENT (DMDP)','DEPARTMENT OF GENERAL SERVICES (DGS)','DEPARTMENT OF ENGINEERING & PUBLIC WORKS (DEPW)','Contact Center ng Bayan Partner Recognition Program','CITY TREASURER’S OFFICE (CTO)','CITY PLANNING DEVELOPMENT OFFICE (CPDO)','CITY LEGAL OFFICE','CITY HEALTH DEPARTMENT (CHD)','CITY AGRICULTURE DEPARTMENT (CAD)','CEBU CITY TRANSPORTATION OFFICE (CCTO)','CEBU CITY RESOURCE MANAGEMENT AND DEVELOPMENT CENTER (CREMDEC)','CEBU CITY MEDICAL CENTER (CCMC)') CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
   `type` enum('Employee','Visitor') NOT NULL DEFAULT 'Visitor',
-  `office` varchar(100) NOT NULL,
   `status` enum('Pending','Accepted','Cancelled') NOT NULL DEFAULT 'Pending',
-  `date` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `FK_visitor_info_employee_info` (`employee_id`),
+  CONSTRAINT `FK_visitor_info_employee_info` FOREIGN KEY (`employee_id`) REFERENCES `employee_info` (`tin_number`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `visitor_info`
---
+-- Dumping data for table city_log_booksystem.visitor_info: ~10 rows (approximately)
+INSERT INTO `visitor_info` (`id`, `employee_id`, `fname`, `lname`, `purpose`, `office`, `type`, `status`, `date`) VALUES
+	(31, NULL, 'Ericson', 'Anuada', 'Internship', 'DEPARTMENT OF SOCIAL WELFARE AND SERVICES (DSWS)', 'Visitor', 'Accepted', '2024-09-11 09:32:20'),
+	(32, NULL, 'French', 'Butera', 'Apply', 'OFFICE OF THE CITY ADMINISTRATOR', 'Visitor', 'Accepted', '2024-09-11 09:39:42'),
+	(33, NULL, 'Glitter', 'Sparkles', 'Lukat Lisensya', 'OFFICE OF THE BUILDING OFFICIAL (OBO)', 'Visitor', 'Accepted', '2024-09-11 09:55:59'),
+	(34, NULL, 'Mardon', 'Dela Peña', 'Paper Works', 'OFFICE OF THE CITY ASSESSORS', 'Visitor', 'Accepted', '2024-09-11 10:23:48'),
+	(35, NULL, 'Janine', 'Ubal', 'Lukat Lisensya', 'OFFICE OF THE CITY CIVIL REGISTRAR (OCCR)', 'Visitor', 'Pending', '2024-09-11 11:48:29'),
+	(36, '890-456-321-987', '', '', 'I work here', 'CITY TREASURER’S OFFICE (CTO)', 'Employee', 'Pending', '2024-09-11 12:11:55'),
+	(37, '674-983-204-751', NULL, NULL, 'I work here', 'LOCAL SCHOOL BOARD(LSB)', 'Employee', 'Pending', '2024-09-11 13:22:22'),
+	(38, '849-356-712-934', NULL, NULL, 'I work here', 'OFFICE OF THE CITY ACCOUNTANT', 'Employee', 'Accepted', '2024-09-11 17:38:58'),
+	(39, '501-279-463-158', NULL, NULL, 'I work here', 'MANAGEMENT INFORMATION & COMPUTER SERVICES (MICS)', 'Employee', 'Accepted', '2024-09-12 02:44:21'),
+	(40, '235-874-619-342', NULL, NULL, 'I work here', 'HUMAN RESOURCE AND DEVELOPMENT OFFICE (HRDO)', 'Employee', 'Accepted', '2024-09-12 12:19:53'),
+	(82, '890-456-321-987', NULL, NULL, 'Work at the Parks & Playground', 'PARKS & PLAYGROUND', 'Employee', 'Pending', '2024-09-19 10:04:02');
 
-INSERT INTO `visitor_info` (`id`, `fname`, `lname`, `purpose`, `type`, `office`, `status`, `date`) VALUES
-(31, 'Ericson', 'Anuada', 'Internship', 'Employee', '', 'Accepted', '2024-09-11 09:32:20'),
-(32, 'French', 'Butera', 'Apply', 'Visitor', '', 'Accepted', '2024-09-11 09:39:42'),
-(33, 'Torya', 'Bulacao', 'I work here', 'Employee', '', 'Accepted', '2024-09-11 09:55:59'),
-(34, 'Mardon', 'Dela Peña', 'Paper Works', 'Visitor', '', 'Accepted', '2024-09-11 10:23:48'),
-(35, 'Ariana', 'Grande', 'Working', 'Employee', '', 'Pending', '2024-09-11 11:48:29'),
-(36, 'Karl John', 'Delfin', 'License', 'Visitor', '', 'Pending', '2024-09-11 12:11:55'),
-(37, 'Dweight Dewey', 'Fuentes', 'License', 'Visitor', '', 'Pending', '2024-09-11 13:22:22'),
-(38, 'Ariana', 'Grande', 'Snack', 'Visitor', '', 'Accepted', '2024-09-11 17:38:58'),
-(39, 'Zhuang', 'Cruz', 'Deed of Sale', 'Visitor', '', 'Accepted', '2024-09-12 02:44:21'),
-(40, 'French', 'Butera', 'Application', 'Employee', '', 'Accepted', '2024-09-12 12:19:53'),
-(41, 'Ariana', 'Grande', 'Work', 'Employee', '', 'Accepted', '2024-09-13 12:54:43'),
-(42, 'Mardon', 'Dela Peña', 'Application', 'Employee', '', 'Accepted', '2024-09-13 12:57:30'),
-(48, 'Ericson', 'Anuada', 'Work', 'Employee', '', 'Accepted', '2024-09-14 06:09:40'),
-(56, 'Zhuang', 'Cruz', 'Malibang', 'Employee', '', 'Accepted', '2024-09-14 10:58:50'),
-(57, 'Ariana', 'Grande', 'Woah', 'Visitor', '', 'Accepted', '2024-09-14 11:22:51'),
-(59, 'Jeremy', 'Traya', 'Looking for Ojt', 'Visitor', 'Office2', 'Cancelled', '2024-09-16 02:55:35');
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `visitor_info`
---
-ALTER TABLE `visitor_info`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `visitor_info`
---
-ALTER TABLE `visitor_info`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
-COMMIT;
-
+/*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;
