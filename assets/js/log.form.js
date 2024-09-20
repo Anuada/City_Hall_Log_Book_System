@@ -1,7 +1,7 @@
 import axios from 'https://cdn.skypack.dev/axios';
 import serializeForm from './function/serializeForm.js';
-import { errorAlert, successAlert } from "./libs/sweetAlert2.js";
-import { strReplace, ucWords } from './function/formatter.js';
+import { confirmAlert, errorAlert, successAlert } from "./libs/sweetAlert2.js";
+import { idFormatter, strReplace, ucWords } from './function/formatter.js';
 
 // VARIABLES
 const [employee_info, visitor_info, employeeInfoContainer] = ['employee_info', 'visitor_info', 'employeeInfoContainer'].map(e => document.getElementById(e));
@@ -41,9 +41,33 @@ type.addEventListener('change', (e) => {
     }
 });
 
-log_form.addEventListener('submit', async (e) => {
+log_form.addEventListener('submit', (e) => {
     e.preventDefault();
     const payload = serializeForm(log_form);
+    const question = "Please confirm that all the details you provided are accurate. Do you want to proceed?";
+    confirmAlert(question, handleFormSubmit, payload);
+})
+
+office.addEventListener('change', (e) => {
+    const value = ucWords(strReplace(e.target.value));
+    if (type.value != '') {
+        if (type.value == 'Employee') {
+            purpose.value = `Work at the ${value}`
+        } else if (type.value == 'Visitor') {
+            purpose.value = `Visit the ${value}`
+        }
+    }
+});
+
+employee_id.addEventListener('change', (e) => {
+    const id = e.target.value;
+    const formattedId = idFormatter(id);
+    employee_id.value = formattedId;
+    getEmployeeInfo(formattedId);
+});
+
+// FUNCTIONS
+const handleFormSubmit = async (payload) => {
     try {
         const { data } = await axios.post('../api/logVisitor.php', payload);
         successAlert(data.message);
@@ -67,25 +91,8 @@ log_form.addEventListener('submit', async (e) => {
             errorAlert(response.data.message);
         }
     }
-})
+}
 
-office.addEventListener('change', (e) => {
-    const value = ucWords(strReplace(e.target.value));
-    if (type.value != '') {
-        if (type.value == 'Employee') {
-            purpose.value = `Work at the ${value}`
-        } else if (type.value == 'Visitor') {
-            purpose.value = `Visit the ${value}`
-        }
-    }
-});
-
-employee_id.addEventListener('change', (e) => {
-    const id = e.target.value;
-    getEmployeeInfo(id);
-});
-
-// FUNCTIONS
 const getEmployeeInfo = async (id) => {
     try {
         const { data } = await axios.get('../api/findEmployee.php', { params: { id: id } });
@@ -113,4 +120,4 @@ document.addEventListener('DOMContentLoaded', async () => {
     } catch (error) {
         console.error(error);
     }
-})
+});

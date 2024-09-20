@@ -29,3 +29,17 @@ export const ucWords = (str) => {
 export const strReplace = (str) => {
     return str.replace(/-/, ' ');
 }
+
+/**
+ * The **`idFormatter`** function ensures that a given numeric string (ID) is formatted into groups of three digits, separated by dashes (-). 
+ * @param {*} id A string of digits representing an ID.
+ * @returns If the ID is already formatted correctly, it returns the original value. If not, it reformats the ID by inserting dashes at the appropriate places.
+ */
+export const idFormatter = (id) => {
+    const idFormat = /^\d{3}(-\d{3})*$/;
+    if (idFormat.test(id)) {
+        return id;
+    }
+    const formattedID = id.replace(/(\d{3})(?=(\d{3})+(?!\d))/g, '$1-');
+    return formattedID;
+}
