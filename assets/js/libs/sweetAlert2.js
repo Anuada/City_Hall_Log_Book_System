@@ -43,13 +43,6 @@ export const confirmAlert = (question, action, ...actionArgs) => {
     }).then((result) => {
         if (result.isConfirmed) {
             action(...actionArgs);
-        } else if (result.isDenied) {
-            sweetalert2.fire({
-                icon: "info",
-                title: "No Changes Were Made",
-                timer: 2000,
-                timerProgressBar: true,
-            });
         }
     });
 };
