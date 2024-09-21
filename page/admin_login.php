@@ -107,7 +107,7 @@ $navbar = ob_get_clean();
       <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
     </div>
     <p><a href="forgot_password.php">Forgot Password?</a></p>
-    <button type="submit" class="button">Login</button>
+    
   </form>
 </div>
 
