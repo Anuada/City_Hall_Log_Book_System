@@ -74,7 +74,7 @@ $navbar = ob_get_clean();
             </div>
             <div style="display:flex;justify-content:space-around;align-items:center">
                 <div class="w3-padding" style="margin-left:10px;">
-                    <a href="../admin/dashboard_admin.php" class="btn btn-primary btn-lg">Admin</a>
+                    <a href="../page/admin_login.php" class="btn btn-primary btn-lg">Admin</a>
 
                 </div>
                 <div class="w3-padding" style="margin-left:10px;">
