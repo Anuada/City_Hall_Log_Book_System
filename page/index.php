@@ -74,11 +74,15 @@ $navbar = ob_get_clean();
             </div>
             <div style="display:flex;justify-content:space-around;align-items:center">
                 <div class="w3-padding" style="margin-left:10px;">
+<<<<<<< HEAD
                     <a href="../page/admin_login.php" class="btn btn-primary btn-lg">Admin</a>
+=======
+                    <a href="../admin/all_info.php" class="btn btn-primary btn-lg">Admin</a>
+>>>>>>> b7a5d492f21cee537dfb004da50d92d5de7e05e5
 
                 </div>
                 <div class="w3-padding" style="margin-left:10px;">
-                    <a href="../visitor/visitor_upload_info.php" class="btn btn-primary btn-lg">Log Now</a>
+                    <a href="../visitor/log.php" class="btn btn-primary btn-lg">Log Now</a>
 
                 </div>
             </div>
