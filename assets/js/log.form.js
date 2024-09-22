@@ -33,6 +33,8 @@ type.addEventListener('change', (e) => {
             purpose.value = 'Visit';
         }
     } else if (!types.includes(selectedType)) {
+        employee_info.style.display = 'none';
+        visitor_info.style.display = 'none';
         errorType.textContent = 'invalid type';
         const options = ['<option disabled selected hidden>SELECT TYPE</option>']
             .concat(types.map(opt => `<option value="${opt}">${opt}</option>`))

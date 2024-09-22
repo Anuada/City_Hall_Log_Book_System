@@ -1,6 +1,12 @@
 <?php
 session_start();
 
+if (!isset($_SESSION['id'])) {
+    header('location: ../page/admin_login.php');
+    exit();
+}
+
+$displayLogout = true;
 ?>
 
 <?php ob_start() ?>
@@ -57,5 +63,6 @@ session_start();
 
 <?php ob_start() ?>
 <script type="module" src="../assets/js/log.calendar.js"></script>
+<script type="module" src="../assets/js/admin.logout.js"></script>
 <?php $scripts = ob_get_clean() ?>
 <?php require_once "../shared/sidebar.admin.php" ?>

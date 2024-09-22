@@ -1,0 +1,29 @@
+import axios from 'https://cdn.skypack.dev/axios';
+import serializeForm from './function/serializeForm.js';
+import { confirmAlert, errorAlert } from "./libs/sweetAlert2.js";
+
+const admin_login = document.getElementById('admin_login');
+const [usernameError, passwordError] = ['usernameError', 'passwordError'].map(e => document.getElementById(e));
+
+admin_login.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const payload = serializeForm(admin_login);
+    const question = "Please confirm that all the details you provided are accurate. Do you want to proceed?";
+    confirmAlert(question, handleLogin, payload);
+});
+
+const handleLogin = async (payload) => {
+    try {
+        await axios.post('../api/adminLogin.php', payload);
+        location.href = "../admin/all_info.php";
+    } catch ({ response }) {
+        if (response && response.status == 422) {
+            usernameError.textContent = response.data.username;
+            passwordError.textContent = response.data.password;
+        } else if (response && response.status == 401) {
+            errorAlert(response.data.message);
+        } else {
+            console.error(error);
+        }
+    }
+}

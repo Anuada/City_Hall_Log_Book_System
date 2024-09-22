@@ -1,117 +1,51 @@
 <?php
 session_start();
+
+if (isset($_SESSION['id'])) {
+  header('location: ../admin/all_info.php');
+  exit();
+}
+
 require_once "../util/DbHelper.php";
 $db = new DbHelper();
 $title = "City Hall";
 $load = false;
+
 ob_start();
 include "../shared/navbar_page.php";
 $navbar = ob_get_clean();
 ?>
 
 <?php ob_start() ?>
-
+<link rel="stylesheet" href="../assets/css/admin.login.css">
 <?php $styles = ob_get_clean() ?>
-<style>
-    body {
-      margin: 0;
-      padding: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-image: url('../assets/image/cebucityhall.jpg');  
-      background-size: cover;  
-      background-position: center;  
-      font-family: sans-serif;  
-      
-    }
-    .background-image {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: url('../assets/image/cebucityhall.jpg');
-      background-size: cover;
-      background-position: center;
-      filter: blur(3px);   
-      z-index: -1;  
-    }
-   
-    .form-container {
-      background-color: rgba(255, 255, 255, 0.8); 
-      padding: 40px;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-      width: 400px;
-    }
 
-    .form-container form {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .form-container .button {
-      padding: 10px 20px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 16px;
-      margin-top: 20px;
-    }
-
-    .form-container .button:hover {
-      background-color: #0056b3;
-    }
-
-    .form-group {
-      margin-bottom: 15px;
-    }
-
-    .form-group label {
-      margin-bottom: 5px;
-      display: block;
-    }
-
-    .form-group input {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-
-    a {
-      color: #007bff;
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-    
-  </style>
 <?php ob_start() ?>
-<div class="background-image"></div> 
+
+<div class="background-image"></div>
 
 <div class="form-container">
-  <form>
+  <form id="admin_login">
     <div class="form-group">
-      <label for="exampleInputEmail1">Email address</label>
-      <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+      <label for="username">Username</label>
+      <input type="text" class="form-control" name="username" id="username" placeholder="Enter Your Username">
+      <div class="form-text text-danger" id="usernameError"></div>
     </div>
     <div class="form-group">
-      <label for="exampleInputPassword1">Password</label>
-      <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+      <label for="password">Password</label>
+      <input type="password" class="form-control" name="password" id="password" placeholder="Enter Your Password">
+      <div class="form-text text-danger" id="passwordError"></div>
     </div>
-    <p><a href="forgot_password.php">Forgot Password?</a></p>
-    
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary btn-block">Submit</button>
+    </div>
   </form>
 </div>
 
-
 <?php $content = ob_get_clean() ?>
+
+<?php ob_start() ?>
+<script type="module" src="../assets/js/admin.login.js"></script>
+<?php $scripts = ob_get_clean() ?>
 
 <?php require_once "../shared/layout.php" ?>

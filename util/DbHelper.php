@@ -25,7 +25,7 @@ class DbHelper
      * The **`fetchRecords`** function retrieves all records from a specified database table.
      * 
      * @param string $table The name of the table to fetch records from.
-     * @return array 
+     * @return array The function returns an array of all records from a specified database table.
      */
     public function fetchRecords(string $table): array
     {
@@ -45,7 +45,7 @@ class DbHelper
      * 
      * @param string $table The name of the table to fetch the record from.
      * @param array $args An associative array of column names and their corresponding values, used to build the **`WHERE`** clause of the query.
-     * @return array|bool|null
+     * @return array|bool|null The function returns an associative array of a single record from a specified table based on the provided conditions.
      */
     public function fetchRecord(string $table, array $args): array|bool|null
     {
@@ -63,7 +63,7 @@ class DbHelper
      * 
      * @param string $table The name of the table from which to delete the record.
      * @param array $args An associative array of column names and values used to build the **`WHERE`** clause for deletion.
-     * @return int|string
+     * @return int|string number of affected rows.
      */
     public function deleteRecord(string $table, array $args): int|string
     {
@@ -80,7 +80,7 @@ class DbHelper
      * 
      * @param string $table The name of the table where the new record will be inserted.
      * @param array $args An associative array of column names and values to insert into the table.
-     * @return int|string
+     * @return int|string number of affected rows.
      */
     public function addRecord(string $table, array $args): int|string
     {
@@ -98,7 +98,7 @@ class DbHelper
      * 
      * @param string $table The name of the table where the record will be updated.
      * @param array $args An associative array of column names and values. The first key-value pair is used as the **`WHERE`** condition, while the rest are used to update the record.
-     * @return int|string
+     * @return int|string number of affected rows.
      */
     public function updateRecord(string $table, array $args): int|string
     {
