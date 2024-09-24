@@ -140,5 +140,9 @@ const calendar = new Calendar(calendarEl, {
 
 document.addEventListener('DOMContentLoaded', async () => {
     await updateMonthYearDisplay(calendar);
-    calendar.render();
-})
+
+    setInterval(() => {
+        calendar.refetchEvents();
+        calendar.render();
+    }, 1000);
+});

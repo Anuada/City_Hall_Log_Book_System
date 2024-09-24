@@ -15,12 +15,14 @@ admin_login.addEventListener('submit', (e) => {
 const handleLogin = async (payload) => {
     try {
         await axios.post('../api/adminLogin.php', payload);
+        [usernameError, passwordError].forEach(e => { if (e) e.textContent = '' });
         location.href = "../admin/all_info.php";
     } catch ({ response }) {
         if (response && response.status == 422) {
             usernameError.textContent = response.data.username;
             passwordError.textContent = response.data.password;
         } else if (response && response.status == 401) {
+            [usernameError, passwordError].forEach(e => { if (e) e.textContent = '' });
             errorAlert(response.data.message);
         } else {
             console.error(error);

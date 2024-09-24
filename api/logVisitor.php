@@ -21,7 +21,7 @@ $data = json_decode($json, true);
 
 $visitor = ['type', 'office', 'fname', 'lname', 'purpose'];
 
-$employee = ['type', 'office', 'employee_id', 'purpose'];
+$employee = ['type', 'employee_id', 'purpose'];
 
 $errorMessages = [];
 $fieldInput = [];
@@ -56,13 +56,6 @@ if ($data['type'] == 'Employee') {
         exit();
     }
 
-    if (!in_array($fieldInput['office'], $offices)) {
-        $errorMessages['office'] = $fieldInput['office'] . ' is not found';
-        http_response_code(422);
-        echo json_encode(['message' => $errorMessages]);
-        exit();
-    }
-
     $findEmployee = $db->fetchRecord('employee_info', ['tin_number' => $fieldInput['employee_id']]);
     if (empty($findEmployee)) {
         $errorMessages['employee_id'] = 'Employee Not Found';
@@ -92,13 +85,6 @@ if ($data['type'] == 'Employee') {
     }
 
     if (!empty($errorMessages)) {
-        http_response_code(422);
-        echo json_encode(['message' => $errorMessages]);
-        exit();
-    }
-
-    if (!in_array($fieldInput['office'], $offices)) {
-        $errorMessages['office'] = $fieldInput['office'] . ' is not found';
         http_response_code(422);
         echo json_encode(['message' => $errorMessages]);
         exit();

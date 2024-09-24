@@ -16,12 +16,8 @@ type.addEventListener('change', (e) => {
         employee_info.style.display = 'block';
         visitor_info.style.display = 'none';
         errorType.textContent = '';
+        purpose.value = 'Work';
 
-        if (office.value != '') {
-            purpose.value = `Work at the ${ucWords(strReplace(office.value))}`;
-        } else {
-            purpose.value = 'Work';
-        }
     } else if (selectedType == 'Visitor') {
         visitor_info.style.display = 'block';
         employee_info.style.display = 'none';
@@ -53,9 +49,7 @@ log_form.addEventListener('submit', (e) => {
 office.addEventListener('change', (e) => {
     const value = ucWords(strReplace(e.target.value));
     if (type.value != '') {
-        if (type.value == 'Employee') {
-            purpose.value = `Work at the ${value}`
-        } else if (type.value == 'Visitor') {
+        if (type.value == 'Visitor') {
             purpose.value = `Visit the ${value}`
         }
     }
@@ -100,7 +94,8 @@ const getEmployeeInfo = async (id) => {
         const { data } = await axios.get('../api/findEmployee.php', { params: { id: id } });
         employeeInfoContainer.style.display = 'block';
         errorEmployeeId.textContent = '';
-        displayEmployeeInfo(data.data);
+        displayEmployeeInfo(data);
+        purpose.value = `Work at the ${ucWords(strReplace(data.office))}`;
     } catch (error) {
         const { response } = error;
         employeeInfoContainer.style.display = 'none';
@@ -110,8 +105,14 @@ const getEmployeeInfo = async (id) => {
 
 const displayEmployeeInfo = (data) => {
     employeeInfoContainer.innerHTML = `
-        <label>Employee Info</label>
-        <input type="text" class="form-control" value="${data}" disabled>
+        <div class="form-group">
+            <label>Employee Name</label>
+            <input type="text" class="form-control" value="${data.name}" disabled>
+        </div>
+        <div class="form-group">
+            <label>Employee Office</label>
+            <input type="text" class="form-control" value="${data.office}" disabled>
+        </div>
     `;
 }
 

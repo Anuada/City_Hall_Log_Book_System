@@ -50,17 +50,6 @@ $navbar = ob_get_clean();
             <div class="form-text text-danger" id="errorType"></div>
         </div>
 
-        <div class="form-group">
-            <label for="office">Office</label>
-            <input list="offices" class="form-control" id="office" name="office" placeholder="Select Office">
-            <datalist id="offices">
-                <?php foreach ($offices as $office): ?>
-                    <option value="<?php echo $office ?>"><?php echo $office ?></option>
-                <?php endforeach ?>
-            </datalist>
-            <div class="form-text text-danger" id="errorOffice"></div>
-        </div>
-
         <div id="employee_info" style="display: none">
             <div class="form-group">
                 <label for="employee_id">Employee ID</label>
@@ -75,7 +64,7 @@ $navbar = ob_get_clean();
                 </datalist>
                 <div class="form-text text-danger" id="errorEmployeeId"></div>
             </div>
-            <div id="employeeInfoContainer" class="form-group"></div>
+            <div id="employeeInfoContainer"></div>
         </div>
 
         <div id="visitor_info" style="display: none">
@@ -89,6 +78,12 @@ $navbar = ob_get_clean();
                 <label for="lname">Last Name</label>
                 <input type="text" class="form-control" id="lname" name="lname" placeholder="Last Name">
                 <div class="form-text text-danger" id="errorLName"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="office">Office</label>
+                <input type="text" class="form-control" id="office" name="office" placeholder="Input Office">
+                <div class="form-text text-danger" id="errorOffice"></div>
             </div>
         </div>
 

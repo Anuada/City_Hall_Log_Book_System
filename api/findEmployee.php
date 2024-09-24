@@ -22,6 +22,10 @@ if (empty($findEmployee)) {
     exit();
 } else {
     http_response_code(200);
-    echo json_encode(['data' => $findEmployee['fname'] . ' ' . $findEmployee['lname']]);
+    $employeeInfo = [
+        'name' => $findEmployee['fname'] . ' ' . $findEmployee['lname'],
+        'office' => $findEmployee['office']
+    ];
+    echo json_encode($employeeInfo);
     exit();
 }
