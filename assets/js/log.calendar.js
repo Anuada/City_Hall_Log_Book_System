@@ -1,6 +1,6 @@
 import { formatDate } from "./function/formatter.js";
 import { Calendar } from 'https://cdn.skypack.dev/fullcalendar';
-import axios from 'https://cdn.skypack.dev/axios';
+import axios from "./libs/axios.js";
 import { confirmAlert, errorAlert, successAlert } from "./libs/sweetAlert2.js";
 
 // VARIABLES
@@ -128,6 +128,7 @@ const handleChangeStatus = async (payload) => {
 const calendar = new Calendar(calendarEl, {
     initialView: 'dayGridMonth',
     events: '../api/logs.php',
+    eventColor: '#0b6131',
     dayMaxEvents: 2,
     selectable: true,
     datesSet: async () => {

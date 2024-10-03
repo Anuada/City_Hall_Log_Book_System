@@ -1,4 +1,4 @@
-import axios from 'https://cdn.skypack.dev/axios';
+import axios from "./libs/axios.js";
 import { confirmAlert } from "./libs/sweetAlert2.js";
 
 const logoutButton = document.getElementById('logoutButton');

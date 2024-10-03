@@ -111,16 +111,15 @@ class DbHelper
     }
 
     /**
-     * Get the current year
-     * @return int|string
+     * get the current date
+     * @return mixed
      */
-    public function getCurrentYear()
+    public function getCurrentDate()
     {
         $sql = "SELECT CURRENT_DATE AS `currentDate`";
         $query = $this->conn->query($sql);
         $date = $query->fetch_assoc();
-        $year = date("Y", strtotime($date["currentDate"]));
-        return $year;
+        return $date['currentDate'];
     }
 
     /**
@@ -149,18 +148,16 @@ class DbHelper
     public function getAllLogs(): array
     {
         $sql = "SELECT 
-                    `v`.`id`, 
-                    CONCAT(COALESCE(NULLIF(`v`.`fname`,''), `e`.`fname`), ' ', COALESCE(NULLIF(`v`.`lname`,''), `e`.`lname`)) AS `title`,
-                    COALESCE(`v`.`office`,`e`.`office`) AS `office`,
-                    `v`.`purpose`, 
-                    `v`.`type`, 
-                    `v`.`status`,
-                    DATE_FORMAT(`v`.`date`, '%Y-%m-%d') AS `start`, 
-                    DATE_FORMAT(`v`.`date`, '%Y-%m-%d') AS `end`, 
-                    DATE_FORMAT(`v`.`date`, '%I:%i %p') AS `time` 
-                FROM `visitor_info` `v`
-                LEFT JOIN `employee_info` `e`
-                ON `v`.`employee_id` = `e`.`tin_number`
+                    `id`, 
+                    CONCAT(`fname`, ' ', `lname`) AS `title`,
+                    `office`,
+                    `purpose`, 
+                    `type`, 
+                    `status`,
+                    DATE_FORMAT(`date`, '%Y-%m-%d') AS `start`, 
+                    DATE_FORMAT(`date`, '%Y-%m-%d') AS `end`, 
+                    DATE_FORMAT(`date`, '%I:%i %p') AS `time` 
+                FROM `visitor_info`
                 ";
         $query = $this->conn->query($sql);
         $rows = [];

@@ -1,0 +1,32 @@
+.text-danger {
+    color: rgb(220 53 69);
+}
+
+.div-margin-top {
+    margin-top: 7%;
+}
+
+@media (max-width: 768px) {
+    .div-margin-top {
+        margin-top: 13%;
+    }
+}
+
+.choice {
+    width: 15rem; 
+    height: 5rem; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.btn-submit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    height: 50px;
+}
+
+.fa-arrow-left {
+    cursor: pointer;
+    font-weight: bolder;
+}

@@ -1,8 +1,6 @@
 <?php
 
-include "../util/DbHelper.php";
-
-$db = new DbHelper();
+require_once '../util/employeeData.php';
 
 header("Content-Type: application/json");
 
@@ -14,7 +12,13 @@ if (!isset($_GET['id']) || empty(trim($_GET['id']))) {
 
 $id = $_GET['id'];
 
-$findEmployee = $db->fetchRecord('employee_info', ['tin_number' => $id]);
+$findEmployee = [];
+
+foreach ($employees as $e) {
+    if ($e['empid'] == $id) {
+        $findEmployee = $e;
+    }
+}
 
 if (empty($findEmployee)) {
     http_response_code(404);
@@ -23,7 +27,8 @@ if (empty($findEmployee)) {
 } else {
     http_response_code(200);
     $employeeInfo = [
-        'name' => $findEmployee['fname'] . ' ' . $findEmployee['lname'],
+        'fname' => $findEmployee['firstname'],
+        'lname' => $findEmployee['lastname'],
         'office' => $findEmployee['office']
     ];
     echo json_encode($employeeInfo);

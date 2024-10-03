@@ -38,7 +38,7 @@ $title = "City Hall";
             </div>
 
             <ul class="nav nav-pills nav-stacked mt-3" style="margin-top: 15px">
-                <li <?php echo Misc::url() == Misc::url('admin/all_info.php') ? 'class="active"class="active"' : '' ?>><a
+                <li <?php echo Misc::url() == Misc::url('admin/all_info.php') ? 'class="active-ch"' : '' ?>><a
                         href="<?php echo Misc::url('admin/all_info.php') ?>"><i class="fas fa-file"></i> <span
                             style="margin-left: 10px">Reports</span></a></li>
             </ul>

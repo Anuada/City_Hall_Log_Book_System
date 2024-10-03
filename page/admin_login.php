@@ -37,7 +37,7 @@ $navbar = ob_get_clean();
       <div class="form-text text-danger" id="passwordError"></div>
     </div>
     <div class="form-group">
-      <button type="submit" class="btn btn-primary btn-block">Submit</button>
+      <button type="submit" class="btn ch-green btn-block">Submit</button>
     </div>
   </form>
 </div>

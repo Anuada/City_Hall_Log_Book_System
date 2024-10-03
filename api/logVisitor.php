@@ -3,6 +3,7 @@
 require_once "../util/DbHelper.php";
 require_once "../enums/Type.php";
 require_once "../enums/Office.php";
+require_once '../util/employeeData.php';
 
 $db = new DbHelper();
 $types = Type::all();
@@ -19,9 +20,9 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 $json = file_get_contents('php://input');
 $data = json_decode($json, true);
 
-$visitor = ['type', 'office', 'fname', 'lname', 'purpose'];
+$visitor = ['type', 'fname', 'lname', 'office', 'division', 'purpose'];
 
-$employee = ['type', 'employee_id', 'purpose'];
+$employee = ['type', 'employee_id', 'fname', 'lname', 'office', 'division', 'purpose'];
 
 $errorMessages = [];
 $fieldInput = [];
@@ -56,7 +57,13 @@ if ($data['type'] == 'Employee') {
         exit();
     }
 
-    $findEmployee = $db->fetchRecord('employee_info', ['tin_number' => $fieldInput['employee_id']]);
+    $findEmployee = [];
+    foreach ($employees as $e) {
+        if ($e['empid'] == $fieldInput['employee_id']) {
+            $findEmployee = $e;
+        }
+    }
+
     if (empty($findEmployee)) {
         $errorMessages['employee_id'] = 'Employee Not Found';
         http_response_code(422);

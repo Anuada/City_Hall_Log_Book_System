@@ -20,11 +20,11 @@
   animation: dot-pulse2 1.5s ease-in-out infinite;
 }
 
-.dot-1 { background-color: #2196F3; animation-delay: 0s; }
-.dot-2 { background-color: #337ab7; animation-delay: 0.3s; }
-.dot-3 { background-color: #2196F3; animation-delay: 0.6s; }
-.dot-4 { background-color: #337ab7; animation-delay: 0.9s; }
-.dot-5 { background-color: #2196F3; animation-delay: 1.2s; }
+.dot-1 { background-color: #0b6131; animation-delay: 0s; }
+.dot-2 { background-color: #35c072; animation-delay: 0.3s; }
+.dot-3 { background-color: #0b6131; animation-delay: 0.6s; }
+.dot-4 { background-color: #35c072; animation-delay: 0.9s; }
+.dot-5 { background-color: #0b6131; animation-delay: 1.2s; }
 
 @keyframes dot-pulse2 {
   0% { transform: scale(0.5); opacity: 0.5; }

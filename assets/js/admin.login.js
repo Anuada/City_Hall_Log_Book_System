@@ -1,4 +1,4 @@
-import axios from 'https://cdn.skypack.dev/axios';
+import axios from './libs/axios.js';
 import serializeForm from './function/serializeForm.js';
 import { confirmAlert, errorAlert } from "./libs/sweetAlert2.js";
 
