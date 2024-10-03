@@ -3,7 +3,6 @@
 require_once "../util/DbHelper.php";
 require_once "../enums/Type.php";
 require_once "../enums/Office.php";
-require_once '../util/employeeData.php';
 
 $db = new DbHelper();
 $types = Type::all();
@@ -57,6 +56,7 @@ if ($data['type'] == 'Employee') {
         exit();
     }
 
+    require_once '../util/employeeData.php';
     $findEmployee = [];
     foreach ($employees as $e) {
         if ($e['empid'] == $fieldInput['employee_id']) {
