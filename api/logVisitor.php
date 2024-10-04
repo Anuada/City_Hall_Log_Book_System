@@ -21,7 +21,9 @@ $data = json_decode($json, true);
 
 $visitor = ['type', 'fname', 'lname', 'office', 'division', 'purpose'];
 
-$employee = ['type', 'employee_id', 'fname', 'lname', 'office', 'division', 'purpose'];
+$employee = ['type', 'employee_id', 'division', 'purpose'];
+
+$employeeInfo = ['fname', 'lname', 'office'];
 
 $errorMessages = [];
 $fieldInput = [];
@@ -55,7 +57,7 @@ if ($data['type'] == 'Employee') {
         echo json_encode(['message' => $errorMessages]);
         exit();
     }
-    
+
     require_once '../util/employeeData.php';
     $findEmployee = [];
     foreach ($employees as $e) {
@@ -66,6 +68,21 @@ if ($data['type'] == 'Employee') {
 
     if (empty($findEmployee)) {
         $errorMessages['employee_id'] = 'Employee Not Found';
+        http_response_code(422);
+        echo json_encode(['message' => $errorMessages]);
+        exit();
+    }
+
+    foreach ($employeeInfo as $e) {
+        if (!isset($data[$e]) || empty(trim($data[$e]))) {
+            $var = str_replace('_', ' ', $e);
+            $errorMessages[$e] = "$var is required";
+        } else {
+            $fieldInput[$e] = $data[$e];
+        }
+    }
+
+    if (!empty($errorMessages)) {
         http_response_code(422);
         echo json_encode(['message' => $errorMessages]);
         exit();
