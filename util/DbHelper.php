@@ -150,6 +150,7 @@ class DbHelper
         $sql = "SELECT 
                     `id`, 
                     CONCAT(`fname`, ' ', `lname`) AS `title`,
+                    `division`,
                     `office`,
                     `purpose`, 
                     `type`, 

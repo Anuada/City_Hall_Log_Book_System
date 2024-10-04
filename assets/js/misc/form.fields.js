@@ -1,7 +1,7 @@
 export const employee_formfield = `
     <div style="display: flex; justify-content: space-between; align-items: center">
         <h3><i class="fas fa-arrow-left ch-green-text" id="back"></i></h3>
-        <h3 style="font-weight: bold" class="ch-green-text">LOG FORM</h3>
+        <h3 style="font-weight: bold" class="ch-green-text">EMPLOYEE LOG FORM</h3>
     </div>
     <form id="log_form">
         <div class="form-group">
@@ -32,7 +32,7 @@ export const employee_formfield = `
 export const visitor_formfield = `
     <div style="display: flex; justify-content: space-between; align-items: center">
         <h3><i class="fas fa-arrow-left ch-green-text" id="back"></i></h3>
-        <h3 style="font-weight: bold" class="ch-green-text">LOG FORM</h3>
+        <h3 style="font-weight: bold" class="ch-green-text">VISITOR LOG FORM</h3>
     </div>
     <form id="log_form">
         <div class="form-group">
