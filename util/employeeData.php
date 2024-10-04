@@ -14,11 +14,11 @@ $context = stream_context_create([
 try {
     $response = @file_get_contents($url, false, $context);
     if ($response === false) {
-        throw new Exception('Request Error: Unable to fetch data');
+        throw new Exception("We're having trouble connecting to the server. Please try again later.");
     }
 } catch (Exception $e) {
     http_response_code(500);
-    echo json_encode(['message' => "We're having trouble connecting to the server. Please try again later."]);
+    echo json_encode(['message' => $e->getMessage()]);
     exit();
 }
 
