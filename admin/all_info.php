@@ -41,7 +41,8 @@ $displayLogout = true;
                                 <th>Name</th>
                                 <th>Purpose</th>
                                 <th>Type</th>
-                                <th> office</th>
+                                <th>Office</th>
+                                <th>Division</th>
                                 <th>Time</th>
                                 <th>Status</th>
                             </tr>
