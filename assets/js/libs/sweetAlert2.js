@@ -39,7 +39,9 @@ export const confirmAlert = (question, action, ...actionArgs) => {
         title: question,
         showDenyButton: true,
         confirmButtonText: "Yes",
-        denyButtonText: `No`,
+        denyButtonText: "No",
+        confirmButtonColor: "#009743",
+        denyButtonColor: "#0b6131",
     }).then((result) => {
         if (result.isConfirmed) {
             action(...actionArgs);
