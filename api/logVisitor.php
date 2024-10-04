@@ -55,7 +55,7 @@ if ($data['type'] == 'Employee') {
         echo json_encode(['message' => $errorMessages]);
         exit();
     }
-
+    
     require_once '../util/employeeData.php';
     $findEmployee = [];
     foreach ($employees as $e) {

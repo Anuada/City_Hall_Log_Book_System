@@ -68,6 +68,7 @@ const getEmployeeInfo = async (id, purpose) => {
     const errorEmployeeId = document.getElementById('errorEmployeeId');
     employeeInfoContainer.style.display = 'none';
     errorEmployeeId.innerHTML = loader2;
+    purpose.value = 'Work';
     try {
         const { data } = await axios.get('../api/findEmployee.php', { params: { id: id } });
         employeeInfoContainer.style.display = 'block';
@@ -152,6 +153,8 @@ const handleFormSubmit = async (payload) => {
             errorDivision.textContent = errorMessages.division;
             errorPurpose.textContent = errorMessages.purpose;
         } else if (response && response.status == 400) {
+            errorAlert(response.data.message);
+        } else {
             errorAlert(response.data.message);
         }
     } finally {
