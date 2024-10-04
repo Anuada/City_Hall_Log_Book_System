@@ -30,3 +30,7 @@
     cursor: pointer;
     font-weight: bolder;
 }
+
+.form-text {
+    height: 15px;
+  }

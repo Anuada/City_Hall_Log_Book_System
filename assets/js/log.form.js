@@ -1,7 +1,7 @@
 import axios from './libs/axios.js';
-import serializeForm from './function/serializeForm.js';
+import serializeForm from './helpers/serializeForm.js';
 import { confirmAlert, errorAlert, successAlert } from "./libs/sweetAlert2.js";
-import { strReplace, ucWords } from './function/formatter.js';
+import { strReplace, ucWords } from './helpers/formatter.js';
 import { employee_formfield, visitor_formfield } from './misc/form.fields.js';
 import { loader, loader2 } from './misc/loaders.js';
 
@@ -150,8 +150,11 @@ const handleFormSubmit = async (payload) => {
                 errorLName.textContent = errorMessages.lname;
                 errorOffice.textContent = errorMessages.office;
             }
-            errorDivision.textContent = errorMessages.division;
             errorPurpose.textContent = errorMessages.purpose;
+            errorDivision.textContent = errorMessages.division;
+            if (errorMessages.divisionRefetch && errorMessages.divisionRefetch == true) {
+                fetchDivisionOptions();
+            }
         } else if (response && response.status == 400) {
             errorAlert(response.data.message);
         } else {

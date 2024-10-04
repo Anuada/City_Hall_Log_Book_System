@@ -3,10 +3,12 @@
 require_once "../util/DbHelper.php";
 require_once "../enums/Type.php";
 require_once "../enums/Office.php";
+require_once "../enums/Division.php";
 
 $db = new DbHelper();
 $types = Type::all();
 $offices = Office::all();
+$divisions = Division::all();
 
 header("Content-Type: application/json");
 
@@ -58,6 +60,14 @@ if ($data['type'] == 'Employee') {
         exit();
     }
 
+    if (!in_array($fieldInput['division'], $divisions)) {
+        $errorMessages['division'] = 'invalid division';
+        $errorMessages['divisionRefetch'] = true;
+        http_response_code(422);
+        echo json_encode(['message' => $errorMessages]);
+        exit();
+    }
+
     require_once '../util/employeeData.php';
     $findEmployee = [];
     foreach ($employees as $e) {
@@ -67,7 +77,7 @@ if ($data['type'] == 'Employee') {
     }
 
     if (empty($findEmployee)) {
-        $errorMessages['employee_id'] = 'Employee Not Found';
+        $errorMessages['employee_id'] = 'employee not found';
         http_response_code(422);
         echo json_encode(['message' => $errorMessages]);
         exit();
@@ -109,6 +119,14 @@ if ($data['type'] == 'Employee') {
     }
 
     if (!empty($errorMessages)) {
+        http_response_code(422);
+        echo json_encode(['message' => $errorMessages]);
+        exit();
+    }
+
+    if (!in_array($fieldInput['division'], $divisions)) {
+        $errorMessages['division'] = 'invalid division';
+        $errorMessages['divisionRefetch'] = true;
         http_response_code(422);
         echo json_encode(['message' => $errorMessages]);
         exit();
