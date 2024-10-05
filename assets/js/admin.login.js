@@ -1,5 +1,5 @@
 import axios from './libs/axios.js';
-import serializeForm from './function/serializeForm.js';
+import serializeForm from './helpers/serializeForm.js';
 import { confirmAlert, errorAlert } from "./libs/sweetAlert2.js";
 
 const admin_login = document.getElementById('admin_login');
