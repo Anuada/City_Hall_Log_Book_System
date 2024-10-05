@@ -22,3 +22,11 @@ body {
     z-index: -1;
     cursor: pointer;
 }
+
+.text-danger {
+    color: rgb(220 53 69);
+}
+
+.form-text {
+    height: 15px;
+}

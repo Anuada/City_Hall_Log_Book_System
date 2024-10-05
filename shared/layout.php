@@ -8,11 +8,10 @@
     <link rel="shortcut icon" href="../assets/image/city_logo.svg" type="image/x-icon">
     <link rel="stylesheet" href="../assets/css/all.css" />
     <link rel="stylesheet" href="../assets/css/w3.css">
-    <link rel="stylesheet" href="../assets/css/sweetalert2.min.css">
     <link rel="stylesheet" href="../assets/css/loader.css">
-    <?php echo (isset($styles)) ? $styles : "" ?>
+    <?php echo $styles ?? "" ?>
     <title>
-        <?php echo (isset($title)) ? "Log Book | " . $title : "" ?>
+        <?php echo isset($title) ? "Log Book | $title" : "" ?>
     </title>
 </head>
 
@@ -26,46 +25,17 @@
         <div class="dot dot-5"></div>
     </div>
 
-    <?php echo isset($navbar) ? $navbar : "" ?>
+    <?php echo $navbar ?? "" ?>
 
     <!-- Content of the page -->
-    <?php echo $content ?>
+    <?php echo $content ?? "" ?>
 
     <!-- JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <script src="../assets/js/sweetalert2.all.min.js"></script>
     <script src="../assets/js/loader.js"></script>
 
-    <?php if (isset($_SESSION["m"])): ?>
-        <?php
-        $m = $_SESSION["m"];
-        $i = strlen($m) - 1;
-        ?>
-        <?php if ($m[$i] != "!"): ?>
-            <?php $m = $m . "!" ?>
-            <script>
-                Swal.fire({
-                    icon: 'success',
-                    title: '<?php echo $m ?>',
-                    confirmButtonColor: '#5DB075',
-                    timer: 2000
-                });
-            </script>
-        <?php else: ?>
-            <script>
-                Swal.fire({
-                    icon: 'error',
-                    title: '<?php echo $m ?>',
-                    confirmButtonColor: '#d33',
-                    timer: 2000
-                });
-            </script>
-        <?php endif; ?>
-        <?php unset($_SESSION["m"]) ?>
-    <?php endif; ?>
-
-    <?php echo (isset($scripts)) ? $scripts : "" ?>
+    <?php echo $scripts ?? "" ?>
 </body>
 
 </html>
