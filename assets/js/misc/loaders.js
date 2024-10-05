@@ -5,4 +5,4 @@ export const loader = `
         <span></span>
     </div>
 `;
-export const loader2 = `<i style="color: #000">Loading...</i>`;
+export const loader2 = `<i class="text-muted">fetching employee data...</i>`;
