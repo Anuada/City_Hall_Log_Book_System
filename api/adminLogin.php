@@ -1,6 +1,6 @@
 <?php
 session_start();
-include "../util/DbHelper.php";
+include "../util/database/DbHelper.php";
 
 $db = new DbHelper();
 

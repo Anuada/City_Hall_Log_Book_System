@@ -9,7 +9,7 @@ if (!isset($_SESSION['id'])) {
     exit();
 }
 
-include "../util/DbHelper.php";
+include "../util/database/DbHelper.php";
 
 $db = new DbHelper();
 

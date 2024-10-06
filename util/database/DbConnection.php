@@ -12,4 +12,12 @@ class DbConnection
     {
         $this->conn->close();
     }
+
+    protected function createDatabaseIfNotExists()
+    {
+        $sql = "CREATE DATABASE IF NOT EXISTS `$this->database`";
+        if ($this->conn->query($sql) === false) {
+            die("Error creating database: " . $this->conn->error);
+        }
+    }
 }

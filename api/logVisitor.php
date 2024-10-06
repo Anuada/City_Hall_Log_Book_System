@@ -1,6 +1,6 @@
 <?php
 
-require_once "../util/DbHelper.php";
+include "../util/database/DbHelper.php";
 require_once "../enums/Type.php";
 require_once "../enums/Office.php";
 require_once "../enums/Division.php";

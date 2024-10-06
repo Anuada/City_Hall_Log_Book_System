@@ -1,6 +1,6 @@
 <?php
 
-require_once "database/drop/DbDrop.php";
+require_once "util/database/DbDrop.php";
 
 $dbDrop = new DbDrop();
 

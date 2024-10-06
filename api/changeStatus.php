@@ -8,7 +8,7 @@ if (!isset($_SESSION['id'])) {
     echo json_encode(['message' => 'Unauthorized Access']);
     exit();
 }
-include "../util/DbHelper.php";
+include "../util/database/DbHelper.php";
 
 $db = new DbHelper();
 
