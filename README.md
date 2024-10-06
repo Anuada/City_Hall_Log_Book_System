@@ -1,6 +1,5 @@
 # User Guide: start.sh Script
 
-================================
 
 ## Introduction
 
@@ -24,13 +23,10 @@ The `start.sh` script is a Bash script that provides a menu-driven interface for
 
 ### 2. Run the script by typing the following command.
 
-    ```bash
     sh scripts/start.sh
-    ```
 
 ### 3. The script will display a menu with the following options:
 
-    ```bash
     Please select an option:
     1. Database Migration
     2. Database Drop
@@ -38,7 +34,6 @@ The `start.sh` script is a Bash script that provides a menu-driven interface for
     4. Database Migration w/ Database Drop
     5. Database Migration w/ Database Seed
     6. Database Migration w/ Database Drop and Database Seed
-    ```
 
 ### 4. Enter the number of your chosen option and press Enter.
 
