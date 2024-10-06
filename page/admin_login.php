@@ -6,10 +6,7 @@ if (isset($_SESSION['id'])) {
   exit();
 }
 
-require_once "../util/DbHelper.php";
-$db = new DbHelper();
 $title = "City Hall";
-$load = false;
 
 ob_start();
 include "../shared/navbar_page.php";

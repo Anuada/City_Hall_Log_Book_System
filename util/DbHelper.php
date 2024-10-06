@@ -1,24 +1,15 @@
 <?php
 
+require_once "DbConnection.php";
+
 /**
  * The **`DbHelper`** class is a utility for interacting with a **`MySQL`** database using the mysqli extension. It provides methods for basic CRUD operations and specific queries related to a visitor logging system.
  */
-class DbHelper
+class DbHelper extends DbConnection
 {
-    private string $hostname = "127.0.0.1";
-    private string $username = "root";
-    private string $password = "";
-    private string $database = "city_log_booksystem";
-    private mysqli $conn;
-
     public function __construct()
     {
-        $this->conn = new mysqli($this->hostname, $this->username, $this->password, $this->database);
-    }
-
-    public function __destruct()
-    {
-        $this->conn->close();
+        parent::__construct();
     }
 
     /**

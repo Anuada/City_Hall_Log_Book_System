@@ -1,7 +1,6 @@
 <?php
 session_start();
-require_once "../util/DbHelper.php";
-$db = new DbHelper();
+
 $title = "City Hall";
 $load = false;
 ob_start();
