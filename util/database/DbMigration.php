@@ -39,7 +39,6 @@ class DbMigration extends DbConnection
 
         $column .= $auto_increment ? " AUTO_INCREMENT" : "";
 
-
         // Add DEFAULT value if provided
         if ($default !== null) {
             if (is_string($default) && $default !== 'CURRENT_TIMESTAMP') {
