@@ -11,7 +11,7 @@ $division = implode("', '", Division::all());
 $types = implode("', '", Type::all());
 $status = implode("', '", Status::all());
 
-$migration->addColumn('id', 'int AUTO_INCREMENT')
+$migration->addColumn('id', 'int', false, null, true)
     ->addColumn('employee_id', 'varchar(100)', true)
     ->addColumn('fname', 'varchar(100)')
     ->addColumn('lname', 'varchar(100)')

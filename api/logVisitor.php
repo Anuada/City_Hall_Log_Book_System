@@ -2,12 +2,10 @@
 
 include "../util/database/DbHelper.php";
 require_once "../enums/Type.php";
-require_once "../enums/Office.php";
 require_once "../enums/Division.php";
 
 $db = new DbHelper();
 $types = Type::all();
-$offices = Office::all();
 $divisions = Division::all();
 
 header("Content-Type: application/json");

@@ -30,16 +30,19 @@ class DbMigration extends DbConnection
         $this->tableName = $tableName;
     }
 
-    public function addColumn($name, $type, $nullable = false, $default = null)
+    public function addColumn($name, $type, $nullable = false, $default = null, $auto_increment = false)
     {
         $column = "`$name` $type";
 
         // Add NULL or NOT NULL constraint
         $column .= $nullable ? " NULL" : " NOT NULL";
 
+        $column .= $auto_increment ? " AUTO_INCREMENT" : "";
+
+
         // Add DEFAULT value if provided
         if ($default !== null) {
-            if (is_string($default) && $default !== 'CURRENT_TIMESTAMP' && $default !== 'AUTO_INCREMENT') {
+            if (is_string($default) && $default !== 'CURRENT_TIMESTAMP') {
                 $default = "'$default'";
             }
             $column .= " DEFAULT $default";
