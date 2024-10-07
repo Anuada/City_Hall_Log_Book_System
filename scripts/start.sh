@@ -15,17 +15,17 @@ read -p "Enter your choice: " option
 
 case $option in
 1)
-    read -p "Enter file name or path: " file
-    sh ./scripts/create/migration.sh $file
+    read -p "Enter table name: " table
+    sh ./scripts/create/migration.sh $table
     ;;
 2)
-    read -p "Enter file name or path: " file
-    sh ./scripts/create/seeder.sh $file
+    read -p "Enter table name: " table
+    sh ./scripts/create/seeder.sh $table
     ;;
 3)
-    read -p "Enter file name or path: " file
-    sh ./scripts/create/migration.sh $file
-    sh ./scripts/create/seeder.sh $file
+    read -p "Enter table name: " table
+    sh ./scripts/create/migration.sh $table
+    sh ./scripts/create/seeder.sh $table
     ;;
 4)
     read -p "Are you sure you want to drop the database? (y/n) " -n 1 -r

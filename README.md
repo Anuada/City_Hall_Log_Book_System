@@ -39,7 +39,7 @@ The `start.sh` script is a Bash script that provides a menu-driven interface for
 
 ### 4. Enter the number of your chosen option and press Enter.
 
-### 5. The script will prompt you to confirm your selection. Enter `y` to proceed or `n` to cancel.
+### 5. The scripts from option 4-9 will prompt you to confirm your selection. Enter `y` to proceed or `n` to cancel.
 
 ## Options
 
@@ -48,17 +48,17 @@ The `start.sh` script is a Bash script that provides a menu-driven interface for
 ### 1. Create Database Migration
 
 - This option creates a new database migration file using the `create/migration.sh` script.
-- The script will prompt you to enter a file name or path.
+- The script will prompt you to enter a table name.
 
 ### 2. Create Database Seeder
 
 - This option creates a new database seeder file using the `create/seeder.sh` script.
-- The script will prompt you to enter a file name or path.
+- The script will prompt you to enter a table name.
 
 ### 3. Create Both Database Migration and Seeder
 
 - This option creates both a new database migration file and a new database seeder file using the `create/migration.sh` and `create/seeder.sh` scripts, respectively.
-- The script will prompt you to enter a file name or path.
+- The script will prompt you to enter a table name.
 
 ### 4. Database Drop
 
