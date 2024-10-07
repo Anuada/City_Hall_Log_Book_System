@@ -85,7 +85,7 @@ const displayTable = async (data) => {
             `);
         });
     } else {
-        modalBody.append('<tr><td colspan="6" class="text-center">No logs found</td></tr>');
+        modalBody.append('<tr><td colspan="8" class="text-center">No logs found</td></tr>');
     }
 
     modal.modal('show');

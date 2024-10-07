@@ -30,7 +30,7 @@ $displayLogout = true;
                 <h4 class="modal-title" id="modalTitle"></h4>
             </div>
             <div class="modal-body">
-                <div class="mb-5">
+                <div style="margin-bottom: 5px">
                     <input type="search" name="search" id="search" class="form-control" placeholder="Search...">
                 </div>
                 <div class="table-responsive">
@@ -51,9 +51,6 @@ $displayLogout = true;
                         </tbody>
                     </table>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
