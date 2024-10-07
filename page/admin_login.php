@@ -2,7 +2,7 @@
 session_start();
 
 if (isset($_SESSION['id'])) {
-  header('location: ../admin/all_info.php');
+  header('location: ../admin/');
   exit();
 }
 

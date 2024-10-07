@@ -77,7 +77,7 @@ $navbar = ob_get_clean();
 
                 </div>
                 <div class="w3-padding" style="margin-left:10px;">
-                    <a href="../visitor/log.php" class="btn ch-green btn-lg">Log Now</a>
+                    <a href="../page/log.php" class="btn ch-green btn-lg">Log Now</a>
 
                 </div>
             </div>

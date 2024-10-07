@@ -21,8 +21,8 @@ $title = "City Hall";
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
-                <li <?php echo Misc::url() == Misc::url('admin/all_info.php') ? 'class="active"' : '' ?>><a
-                        href="<?php echo Misc::url('admin/all_info.php') ?>">Reports</a>
+                <li <?php echo Misc::url() == Misc::url('admin/') ? 'class="active"' : '' ?>><a
+                        href="<?php echo Misc::url('admin/') ?>">Reports</a>
                 </li>
             </ul>
         </div>
@@ -38,8 +38,8 @@ $title = "City Hall";
             </div>
 
             <ul class="nav nav-pills nav-stacked mt-3" style="margin-top: 15px">
-                <li <?php echo Misc::url() == Misc::url('admin/all_info.php') ? 'class="active-ch"' : '' ?>><a
-                        href="<?php echo Misc::url('admin/all_info.php') ?>"><i class="fas fa-file"></i> <span
+                <li <?php echo Misc::url() == Misc::url('admin/') ? 'class="active-ch"' : '' ?>><a
+                        href="<?php echo Misc::url('admin/') ?>"><i class="fas fa-file"></i> <span
                             style="margin-left: 10px">Reports</span></a></li>
             </ul>
         </div>

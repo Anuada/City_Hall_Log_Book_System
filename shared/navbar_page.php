@@ -1,7 +1,7 @@
 <div class="w3-top">
     <div class="w3-bar w3-padding-large w3-row-padding ch-green">
         <h3 class="w3-half">
-            <a href="../page/index.php" style="text-decoration: none; letter-spacing: 2px;">
+            <a href="../page/" style="text-decoration: none; letter-spacing: 2px;">
                 CITY HALL LOG BOOK SYSTEM
             </a>
         </h3>

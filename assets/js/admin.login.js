@@ -16,7 +16,7 @@ const handleLogin = async (payload) => {
     try {
         await axios.post('../api/adminLogin.php', payload);
         [usernameError, passwordError].forEach(e => { if (e) e.textContent = '' });
-        location.href = "../admin/all_info.php";
+        location.href = "../admin/";
     } catch ({ response }) {
         if (response && response.status == 422) {
             usernameError.textContent = response.data.username;
