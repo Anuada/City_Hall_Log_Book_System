@@ -8,8 +8,8 @@ $visitors = [
     [
         'fname' => 'Taylor',
         'lname' => 'Swift',
-        'purpose' => 'Visit the City Hall',
-        'office' => 'CEBU CITY MEDICAL CENTER',
+        'purpose' => 'Visit the Cebu City Medical Center',
+        'office' => 'Cebu City Medical Center',
         'division' => 'Administrative',
         'type' => 'Visitor'
     ],
@@ -17,7 +17,7 @@ $visitors = [
         'fname' => 'Ariana',
         'lname' => 'Grande',
         'purpose' => 'Meet with the Mayor',
-        'office' => 'OFFICE OF THE MAYOR',
+        'office' => 'Office of the Mayor',
         'division' => 'Client Support',
         'type' => 'Visitor'
     ],
@@ -25,7 +25,7 @@ $visitors = [
         'fname' => 'Olivia',
         'lname' => 'Rodrigo',
         'purpose' => 'Attend a meeting',
-        'office' => 'CEBU CITY ENVIRONMENT AND NATURAL RESOURCES OFFICE',
+        'office' => 'Cebu City Environment and Natural Resources Office',
         'division' => 'Technical Support',
         'type' => 'Visitor'
     ],
@@ -33,7 +33,7 @@ $visitors = [
         'fname' => 'Justin',
         'lname' => 'Bieber',
         'purpose' => 'Visit the City Health Department',
-        'office' => 'CITY HEALTH DEPARTMENT',
+        'office' => 'City Health Department',
         'division' => 'Developers',
         'type' => 'Visitor'
     ],
@@ -41,7 +41,7 @@ $visitors = [
         'fname' => 'Lady',
         'lname' => 'Gaga',
         'purpose' => 'Inspect the facilities',
-        'office' => 'PEACE AND ORDER PROGRAM',
+        'office' => 'Peace and Order Program',
         'division' => 'Administrative',
         'type' => 'Visitor'
     ]
@@ -53,7 +53,7 @@ $employees = [
         'fname' => 'Nicki',
         'lname' => 'Minaj',
         'purpose' => 'Work at the Office of the City Accountant',
-        'office' => 'OFFICE OF THE CITY ACCOUNTANT',
+        'office' => 'Office of the City Accountant',
         'division' => 'Administrative',
         'type' => 'Employee'
     ],
@@ -61,8 +61,8 @@ $employees = [
         'employee_id' => '12345',
         'fname' => 'Katy',
         'lname' => 'Perry',
-        'purpose' => 'Work at the CEBU CITY MEDICAL CENTER',
-        'office' => 'CEBU CITY MEDICAL CENTER',
+        'purpose' => 'Work at the Cebu City Medical Center',
+        'office' => 'Cebu City Medical Center',
         'division' => 'Client Support',
         'type' => 'Employee'
     ],
@@ -70,8 +70,8 @@ $employees = [
         'employee_id' => '67890',
         'fname' => 'Beyoncé',
         'lname' => 'Knowles-Carter',
-        'purpose' => 'Work at the CEBU CITY ENVIRONMENT AND NATURAL RESOURCES OFFICE',
-        'office' => 'CEBU CITY ENVIRONMENT AND NATURAL RESOURCES OFFICE',
+        'purpose' => 'Work at the Cebu City Environment and Natural Resources Office',
+        'office' => 'Cebu City Environment and Natural Resources Office',
         'division' => 'Technical Support',
         'type' => 'Employee'
     ],
@@ -79,8 +79,8 @@ $employees = [
         'employee_id' => '11111',
         'fname' => 'Rihanna',
         'lname' => 'Fenty',
-        'purpose' => 'Work at the CITY HEALTH DEPARTMENT',
-        'office' => 'CITY HEALTH DEPARTMENT',
+        'purpose' => 'Work at the City Health Department',
+        'office' => 'City Health Department',
         'division' => 'Developers',
         'type' => 'Employee'
     ],
@@ -88,8 +88,8 @@ $employees = [
         'employee_id' => '22222',
         'fname' => 'Abel',
         'lname' => 'Tesfaye',
-        'purpose' => 'Work at the PEACE AND ORDER PROGRAM',
-        'office' => 'PEACE AND ORDER PROGRAM',
+        'purpose' => 'Work at the Peace and Order Program',
+        'office' => 'Peace and Order Program',
         'division' => 'Administrative',
         'type' => 'Employee'
     ]
