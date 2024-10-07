@@ -17,9 +17,9 @@ $migration->addColumn('id', 'int', false, null, true)
     ->addColumn('lname', 'varchar(100)')
     ->addColumn('purpose', 'varchar(100)')
     ->addColumn('office', 'varchar(100)')
-    ->addColumn('division', "enum('$division')", false, 'Technical Support')
-    ->addColumn('type', "enum('$types')", false, 'Visitor')
-    ->addColumn('status', "enum('$status')", false, 'Pending')
+    ->addColumn('division', "enum('$division')", false, Division::Technical_Support->value)
+    ->addColumn('type', "enum('$types')", false, Type::Visitor->value)
+    ->addColumn('status', "enum('$status')", false, Status::Pending->value)
     ->addColumn('date', "timestamp", false, 'CURRENT_TIMESTAMP')
     ->addPrimaryKey('id');
 
