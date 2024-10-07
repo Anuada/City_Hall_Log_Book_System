@@ -35,7 +35,7 @@ require_once "util/database/DbMigration.php";
 \$migration = new DbMigration('$filename');
 
 \$migration->addColumn('id', 'int', false, null, true)
-    // add column here...
+    // Add columns here...
     ->addPrimaryKey('id');
 ;
 
