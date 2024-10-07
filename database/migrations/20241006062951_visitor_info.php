@@ -22,6 +22,5 @@ $migration->addColumn('id', 'int', false, null, true)
     ->addColumn('status', "enum('$status')", false, 'Pending')
     ->addColumn('date', "timestamp", false, 'CURRENT_TIMESTAMP')
     ->addPrimaryKey('id');
-;
 
 echo $migration->create();

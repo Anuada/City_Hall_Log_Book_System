@@ -9,6 +9,5 @@ $migration->addColumn('id', 'int', false, null, true)
     ->addColumn('password', 'varchar(255)')
     ->addColumn('created_at', "timestamp", false, 'CURRENT_TIMESTAMP')
     ->addPrimaryKey('id');
-;
 
 echo $migration->create();
