@@ -97,4 +97,4 @@ $employees = [
 
 $visitor_info = array_merge($visitors, $employees);
 
-echo $seeder->seed($visitor_info, true);
+// echo $seeder->seed($visitor_info, true);
