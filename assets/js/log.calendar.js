@@ -121,7 +121,11 @@ const handleChangeStatus = async (payload) => {
             errorAlert(data.message);
         }
     } catch (error) {
-        console.error(error);
+        const { response } = error;
+        if (response && response.status == 404) {
+            errorAlert(response.data.message);
+            modal.modal('hide');
+        }
     }
 }
 

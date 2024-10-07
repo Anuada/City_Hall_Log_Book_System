@@ -9,8 +9,10 @@ if (!isset($_SESSION['id'])) {
     exit();
 }
 include "../util/database/DbHelper.php";
+include "../enums/Status.php";
 
 $db = new DbHelper();
+$statuses = Status::all();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
@@ -26,6 +28,12 @@ $status = isset($data['status']) ? $data['status'] : '';
 
 if (empty($id) || empty($status)) {
     echo json_encode(['message' => 'Fill out the missing fields', 'success' => false]);
+    exit();
+}
+
+if (!in_array($status, $statuses)) {
+    http_response_code(404);
+    echo json_encode(['message' => 'Incorrect Status', 'success' => false]);
     exit();
 }
 
