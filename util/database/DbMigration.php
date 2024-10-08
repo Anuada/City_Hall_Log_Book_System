@@ -8,8 +8,6 @@ class DbMigration extends DbConnection
     private $tableName;
     private $columns = [];
     private $modifiedColumns = [];
-    private $primaryKey = null;
-    private $foreignKeys = [];
     private DbHelper $db;
 
     public function __construct($tableName)
