@@ -177,4 +177,21 @@ class DbMigration extends DbConnection
             return $e->getMessage() . " \n";
         }
     }
+
+    public function dropTable()
+    {
+        try {
+            $sql = "DROP TABLE IF EXISTS `$this->tableName`";
+
+            $query = $this->conn->query($sql);
+
+            if ($query === true) {
+                return "Table '$this->tableName' deleted successfully \n";
+            } else {
+                throw new Exception('Error deleting table: ' . $this->conn->error);
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+    }
 }
