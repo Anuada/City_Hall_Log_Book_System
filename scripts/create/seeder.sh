@@ -24,7 +24,7 @@ if [ "$directory" = "." ]; then
 fi
 
 # Construct the new filename by prepending the date and time to the original filename
-new_filename="${datetime}_${filename}.php"
+new_filename="${datetime}_create_${filename}_seeder.php"
 
 # Create the file with the new filename in the specified or current directory
 cat <<EOL > "$directory/$new_filename"
