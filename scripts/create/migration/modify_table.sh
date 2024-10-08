@@ -34,7 +34,7 @@ require_once "util/database/DbMigration.php";
 
 \$migration = new DbMigration('$filename');
 
-// Rename A Column
+// Rename a column
 // \$migration->renameColumn('old_name', 'new_name', 'type');
 
 // Modify column's type and/or its constraints
