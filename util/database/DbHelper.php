@@ -136,6 +136,15 @@ class DbHelper extends DbConnection
         return $cond;
     }
 
+    public function foreignKeyNameFinder($table, $column)
+    {
+        $sql = "SELECT CONSTRAINT_NAME FROM information_schema.KEY_COLUMN_USAGE
+                WHERE TABLE_NAME = '$table' AND COLUMN_NAME = '$column'";
+        $query = $this->conn->query($sql);
+        $fk_name = $query->fetch_assoc();
+        return $fk_name["CONSTRAINT_NAME"];
+    }
+
     /**
      * The **`getAllLogs`** function retrieves and returns all visitor logs from the database, including details such as visitor name, purpose, type, status, office, date, and time.
      * @return array

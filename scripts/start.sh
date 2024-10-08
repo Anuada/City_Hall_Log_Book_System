@@ -16,7 +16,7 @@ read -p "Enter your choice: " option
 case $option in
 1)
     read -p "Enter table name: " table
-    sh ./scripts/create/migration.sh $table
+    sh ./scripts/create/migration/create_table.sh $table
     ;;
 2)
     read -p "Enter table name: " table
@@ -24,7 +24,7 @@ case $option in
     ;;
 3)
     read -p "Enter table name: " table
-    sh ./scripts/create/migration.sh $table
+    sh ./scripts/create/migration/create_table.sh $table
     sh ./scripts/create/seeder.sh $table
     ;;
 4)

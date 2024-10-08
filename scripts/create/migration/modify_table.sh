@@ -24,7 +24,7 @@ if [ "$directory" = "." ]; then
 fi
 
 # Construct the new filename by prepending the date and time to the original filename
-new_filename="${datetime}_${filename}.php"
+new_filename="${datetime}_modify_${filename}_table.php"
 
 # Create the file with the new filename in the specified or current directory
 cat <<EOL > "$directory/$new_filename"
@@ -34,12 +34,25 @@ require_once "util/database/DbMigration.php";
 
 \$migration = new DbMigration('$filename');
 
-\$migration->addColumn('id', 'int', false, null, true)
-    // Add columns here...
-    ->addColumn('created_at', "timestamp", false, 'CURRENT_TIMESTAMP')
-    ->addPrimaryKey('id');
+// Rename A Column
+// \$migration->renameColumn('old_name', 'new_name', 'type');
 
-echo \$migration->create();
+// Modify column's type and/or its constraints
+// \$migration->modifyColumn('column_name','type', ...other_constraints);
+
+// Delete a column
+// \$migration->dropColumn('column_name');
+
+// Drop the primary key
+// \$migration->dropPrimaryKey();
+
+// Drop a foreign key
+// \$migration->dropForeignKey('column_name');
+
+// Add a column
+// \$migration->addColumn('column_name','type', ...other_constraints);
+
+echo \$migration->modify();
 EOL
 
 # Output a message to confirm file creation

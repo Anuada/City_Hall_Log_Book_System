@@ -1,13 +1,16 @@
 <?php
 
 require_once "DbConnection.php";
+require_once "DbHelper.php";
 
 class DbMigration extends DbConnection
 {
     private $tableName;
     private $columns = [];
+    private $modifiedColumns = [];
     private $primaryKey = null;
     private $foreignKeys = [];
+    private DbHelper $db;
 
     public function __construct($tableName)
     {
@@ -26,6 +29,7 @@ class DbMigration extends DbConnection
         if ($this->conn->error) {
             die("Database selection failed: " . $this->conn->error);
         }
+        $this->db = new DbHelper();
 
         $this->tableName = $tableName;
     }
@@ -34,12 +38,10 @@ class DbMigration extends DbConnection
     {
         $column = "`$name` $type";
 
-        // Add NULL or NOT NULL constraint
         $column .= $nullable ? " NULL" : " NOT NULL";
 
         $column .= $auto_increment ? " AUTO_INCREMENT" : "";
 
-        // Add DEFAULT value if provided
         if ($default !== null) {
             if (is_string($default) && $default !== 'CURRENT_TIMESTAMP') {
                 $default = "'$default'";
@@ -51,34 +53,83 @@ class DbMigration extends DbConnection
         return $this;
     }
 
+    public function renameColumn($name, $rename, $type, $nullable = false)
+    {
+        $column = "CHANGE `$name` $rename $type";
+
+        $column .= $nullable ? " NULL" : " NOT NULL";
+
+        $this->modifiedColumns[] = $column;
+        return $this;
+    }
+
+    public function modifyColumn($name, $type, $nullable = false, $default = null, $auto_increment = false)
+    {
+        $column = "MODIFY `$name` $type";
+
+        $column .= $nullable ? " NULL" : " NOT NULL";
+
+        $column .= $auto_increment ? " AUTO_INCREMENT" : "";
+
+        if ($default !== null) {
+            if (is_string($default) && $default !== 'CURRENT_TIMESTAMP') {
+                $default = "'$default'";
+            }
+            $column .= " DEFAULT $default";
+        }
+
+        $this->modifiedColumns[] = $column;
+        return $this;
+    }
+
+    public function dropColumn($name)
+    {
+        $column = "DROP COLUMN `$name`";
+        $this->modifiedColumns[] = $column;
+        return $this;
+    }
+
     public function addPrimaryKey($columnName)
     {
-        $this->primaryKey = $columnName;
+        $column = "PRIMARY KEY (`$columnName`)";
+        $this->columns[] = $column;
         return $this;
     }
 
     public function addForeignKey($columnName, $referencedTable, $referencedColumn, $onDelete = 'CASCADE', $onUpdate = 'CASCADE')
     {
-        $this->foreignKeys[] = "FOREIGN KEY (`$columnName`) REFERENCES `$referencedTable`(`$referencedColumn`) ON DELETE $onDelete ON UPDATE $onUpdate";
+        $column = "FOREIGN KEY (`$columnName`) REFERENCES `$referencedTable`(`$referencedColumn`) ON DELETE $onDelete ON UPDATE $onUpdate";
+        $this->columns[] = $column;
+        return $this;
+    }
+
+    public function dropPrimaryKey()
+    {
+        $column = "DROP PRIMARY KEY";
+        $this->modifiedColumns[] = $column;
+        return $this;
+    }
+
+    public function dropForeignKey($columnName)
+    {
+        $foreign_key_name = $this->db->foreignKeyNameFinder($this->tableName, $columnName);
+        $column = "DROP FOREIGN KEY $foreign_key_name";
+        $this->modifiedColumns[] = $column;
         return $this;
     }
 
     public function create()
     {
-        $columnsSQL = implode(", ", $this->columns);
-
-        // Add primary key if defined
-        if ($this->primaryKey) {
-            $columnsSQL .= ", PRIMARY KEY (`$this->primaryKey`)";
-        }
-
-        // Add foreign keys if defined
-        if (!empty($this->foreignKeys)) {
-            $columnsSQL .= ", " . implode(", ", $this->foreignKeys);
-        }
-
         try {
-            // Final SQL for creating the table
+            $columnsSQL = implode(", ", $this->columns);
+
+            $checkTable = "SHOW TABLES LIKE '$this->tableName'";
+            $checkTableQuery = $this->conn->query($checkTable);
+
+            if ($checkTableQuery->num_rows > 0) {
+                return;
+            }
+
             $sql = "CREATE TABLE IF NOT EXISTS `$this->tableName` ($columnsSQL) ENGINE=InnoDB";
 
             $query = $this->conn->query($sql);
@@ -88,6 +139,42 @@ class DbMigration extends DbConnection
             } else {
                 throw new Exception('Error Creating table: ' . $this->conn->error);
             }
+        } catch (Exception $e) {
+            return $e->getMessage() . " \n";
+        }
+    }
+
+    public function modify()
+    {
+        $columnsSQL = "";
+        try {
+            if (!empty($this->modifiedColumns)) {
+                $columnsSQL = implode(", ", $this->modifiedColumns);
+            } elseif (!empty($this->columns)) {
+                $addColumns = array_map(function ($column) {
+                    return "ADD $column";
+                }, $this->columns);
+                $columnsSQL = implode(", ", $addColumns);
+            } else {
+                throw new Exception("Nothing to modify");
+            }
+
+            $checkTable = "SHOW TABLES LIKE '$this->tableName'";
+            $checkTableQuery = $this->conn->query($checkTable);
+            if ($checkTableQuery->num_rows <= 0) {
+                throw new Exception("'$this->tableName' table does not exists");
+            }
+
+            $sql = "ALTER TABLE `$this->tableName` $columnsSQL";
+
+            $query = $this->conn->query($sql);
+
+            if ($query === true) {
+                return "Modified '$this->tableName' table \n";
+            } else {
+                throw new Exception('Error Modifying table: ' . $this->conn->error);
+            }
+
         } catch (Exception $e) {
             return $e->getMessage() . " \n";
         }
