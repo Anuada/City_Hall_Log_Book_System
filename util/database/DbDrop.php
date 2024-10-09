@@ -2,8 +2,14 @@
 
 require_once "DbConnection.php";
 
+/**
+ * The `DbDrop` class is a child class of `DbConnection` and is designed to drop a database.
+ */
 class DbDrop extends DbConnection
 {
+    /**
+     * The constructor initializes a new mysqli connection using the `hostname`, `username`, and `password` properties inherited from the `DbConnection` class. If the connection fails, it dies with an error message.
+     */
     public function __construct()
     {
         $this->conn = new mysqli($this->hostname, $this->username, $this->password);
@@ -13,6 +19,11 @@ class DbDrop extends DbConnection
         }
     }
 
+    /**
+     * The drop method is responsible for dropping the database.
+     * @throws \Exception
+     * @return string If the `DROP DATABASE` query fails, it throws an exception with an error message. If the query succeeds, it returns a success message.
+     */
     public function drop()
     {
         try {

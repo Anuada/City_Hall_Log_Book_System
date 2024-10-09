@@ -28,13 +28,12 @@ class Misc
         return $http_protocol . "://" . $host . $requestPath;
     }
 
-    public static function uploadImage($file, $filename, $filedir)
+    public static function uppercaseBeforeColon($string)
     {
-        $img_name = $filename . ".png";
-        $img_file = $filedir . $img_name;
-        move_uploaded_file($file["tmp_name"], $img_file);
-
-        return $img_file;
+        [$first_word, $second_word] = explode(':', $string);
+        $output = strtoupper($first_word);
+        $output .= isset($second_word) ? " $second_word" : '';
+        return $output;
     }
 
     public static function displayEnums(array $enums)
