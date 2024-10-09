@@ -6,7 +6,7 @@ import { employee_formfield, visitor_formfield } from './misc/form.fields.js';
 import { loader, loader2 } from './misc/loaders.js';
 
 // VARIABLES
-const [select_button, log_book_form] = ['select_button', 'log_book_form'].map(e => document.getElementById(e));
+const [div_container, select_button, log_book_form] = ['div_container', 'select_button', 'log_book_form'].map(e => document.getElementById(e));
 const [employee, visitor] = ['employee', 'visitor'].map(e => document.getElementById(e));
 let visitor_type = '';
 
@@ -15,6 +15,7 @@ employee.addEventListener('click', () => {
     visitor_type = 'Employee';
     select_button.style.display = 'none';
     log_book_form.style.display = 'block';
+    div_container.classList.add('margin-top-form');
     log_book_form.innerHTML = employee_formfield;
     fetchDivisionOptions();
 });
@@ -23,6 +24,7 @@ visitor.addEventListener('click', () => {
     visitor_type = 'Visitor';
     select_button.style.display = 'none';
     log_book_form.style.display = 'block';
+    div_container.classList.add('margin-top-form');
     log_book_form.innerHTML = visitor_formfield;
     fetchDivisionOptions();
 });
@@ -34,6 +36,7 @@ document.addEventListener('click', (e) => {
         log_form.reset();
         log_book_form.style.display = 'none';
         select_button.style.display = 'flex';
+        div_container.classList.remove('margin-top-form');
     }
 });
 

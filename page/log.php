@@ -14,12 +14,24 @@ $navbar = ob_get_clean();
 <?php $styles = ob_get_clean() ?>
 <?php ob_start() ?>
 
-<div id="select_button" style="display:flex;justify-content:space-evenly;align-items:center;height:100vh">
-    <button class="btn ch-green btn-lg choice" id="employee">Employee</button>
-    <button class="btn ch-green btn-lg choice" id="visitor">Visitor</button>
-</div>
+<div id="div_container" class="reverse-flex margin-top-20"
+    style="display:flex; justify-content: space-around; align-items: center;">
+    <div>
+        <img src="../assets/image/city_logo.svg" alt="City Hall Logo" width="300px">
+    </div>
+    <div class="margin-top-5">
+        <div id="select_button" style="display:flex;justify-content:space-evenly;align-items:center;height:100vh">
+            <div class="w3-padding" style="margin-left:10px">
+                <button class="btn ch-green btn-lg choice" id="employee">Employee</button>
+            </div>
+            <div class="w3-padding" style="margin-left:10px">
+                <button class="btn ch-green btn-lg choice" id="visitor">Visitor</button>
+            </div>
+        </div>
 
-<div id="log_book_form" class="container div-margin-top" style="display:none"></div>
+        <div id="log_book_form" class="container div-margin-top log-form-width" style="display:none"></div>
+    </div>
+</div>
 
 <?php
 $content = ob_get_clean();
