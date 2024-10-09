@@ -12,11 +12,7 @@ class DbDrop extends DbConnection
      */
     public function __construct()
     {
-        $this->conn = new mysqli($this->hostname, $this->username, $this->password);
-
-        if ($this->conn->connect_error) {
-            die("Connection failed: " . $this->conn->connect_error);
-        }
+        parent::__construct();
     }
 
     /**

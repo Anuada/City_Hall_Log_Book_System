@@ -10,6 +10,21 @@ class DbConnection
     protected string $password = "";
     protected string $database = "city_log_booksystem";
     protected mysqli $conn;
+    protected mixed $stmt;
+
+    public function __construct()
+    {
+        try {
+            $this->conn = new mysqli($this->hostname, $this->username, $this->password);
+
+            if ($this->conn->connect_error) {
+                throw new Exception("Connection failed: " . $this->conn->connect_error);
+            }
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            exit();
+        }
+    }
 
     /**
      * This destructor closes the database connection when the object is destroyed.
@@ -17,6 +32,9 @@ class DbConnection
     public function __destruct()
     {
         $this->conn->close();
+        if (isset($this->stmt) && $this->stmt !== null) {
+            $this->stmt->close();
+        }
     }
 
     /**

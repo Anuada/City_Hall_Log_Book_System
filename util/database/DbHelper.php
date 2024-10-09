@@ -9,10 +9,16 @@ class DbHelper extends DbConnection
 {
     public function __construct()
     {
-        $this->conn = new mysqli($this->hostname, $this->username, $this->password, $this->database);
+        parent::__construct();
+        try {
+            $this->conn->select_db($this->database);
 
-        if ($this->conn->connect_error) {
-            die("Connection failed: " . $this->conn->connect_error);
+            if ($this->conn->error) {
+                throw new Exception("Database selection failed: " . $this->conn->error);
+            }
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            exit();
         }
     }
 
@@ -25,12 +31,12 @@ class DbHelper extends DbConnection
     public function fetchRecords(string $table): array
     {
         $sql = "SELECT * FROM `$table`";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->execute();
-        $result = $stmt->get_result();
+        $this->stmt = $this->conn->prepare($sql);
+        $this->stmt->execute();
+        $result = $this->stmt->get_result();
         $rows = [];
         while ($row = $result->fetch_assoc()) {
-            $rows[] = $row;
+            $rows[] = (object) $row;
         }
         return $rows;
     }
@@ -42,14 +48,17 @@ class DbHelper extends DbConnection
      * @param array $args An associative array of column names and their corresponding values, used to build the **`WHERE`** clause of the query.
      * @return array|bool|null The function returns an associative array of a single record from a specified table based on the provided conditions.
      */
-    public function fetchRecord(string $table, array $args): array|bool|null
+    public function fetchRecord(string $table, array $args)
     {
         $keys = array_keys($args);
         $values = array_values($args);
-        $condition = $this->condition($keys, $values, 0, " AND ");
+        $condition = $this->condition($keys, 0, ' AND ');
         $sql = "SELECT * FROM `$table` WHERE $condition";
-        $query = $this->conn->query($sql);
-        $row = $query->fetch_assoc();
+        $this->stmt = $this->conn->prepare($sql);
+        $this->stmt->bind_param($this->bindingParams($values), ...$values);
+        $this->stmt->execute();
+        $result = $this->stmt->get_result();
+        $row = $result->fetch_assoc();
         return $row;
     }
 
@@ -62,12 +71,14 @@ class DbHelper extends DbConnection
      */
     public function deleteRecord(string $table, array $args): int|string
     {
-        $key = array_keys($args);
-        $value = array_values($args);
-        $condition = $this->condition($key, $value, 0, " AND ");
+        $keys = array_keys($args);
+        $values = array_values($args);
+        $condition = $this->condition($keys, 0, ' AND ');
         $sql = "DELETE FROM `$table` WHERE $condition";
-        $this->conn->query($sql);
-        return $this->conn->affected_rows;
+        $this->stmt = $this->conn->prepare($sql);
+        $this->stmt->bind_param($this->bindingParams($values), ...$values);
+        $this->stmt->execute();
+        return $this->stmt->affected_rows;
     }
 
     /**
@@ -79,13 +90,14 @@ class DbHelper extends DbConnection
      */
     public function addRecord(string $table, array $args): int|string
     {
-        $key = array_keys($args);
-        $value = array_values($args);
-        $keys = implode("`, `", $key);
-        $values = implode("', '", $value);
-        $sql = "INSERT INTO `$table` (`$keys`) VALUES ('$values')";
-        $this->conn->query($sql);
-        return $this->conn->affected_rows;
+        $keys = array_keys($args);
+        $values = array_values($args);
+        $key = implode("`, `", $keys);
+        $sql = "INSERT INTO `$table` (`$key`) VALUES (" . $this->blindItem($values) . ")";
+        $this->stmt = $this->conn->prepare($sql);
+        $this->stmt->bind_param($this->bindingParams($values), ...$values);
+        $this->stmt->execute();
+        return $this->stmt->affected_rows;
     }
 
     /**
@@ -97,12 +109,25 @@ class DbHelper extends DbConnection
      */
     public function updateRecord(string $table, array $args): int|string
     {
-        $key = array_keys($args);
-        $value = array_values($args);
-        $set = $this->condition($key, $value, 1, ", ");
-        $sql = "UPDATE `$table` SET $set WHERE `$key[0]` = '$value[0]'";
-        $this->conn->query($sql);
-        return $this->conn->affected_rows;
+        $keys = array_keys($args);
+        $values = $this->updateValues(array_values($args));
+        $sets = $this->condition($keys, 1, ", ");
+        $sql = "UPDATE `$table` SET $sets WHERE `$keys[0]` = ?";
+        $this->stmt = $this->conn->prepare($sql);
+        $this->stmt->bind_param($this->bindingParams($values), ...$values);
+        $this->stmt->execute();
+        return $this->stmt->affected_rows;
+    }
+
+    public function foreignKeyNameFinder($table, $column)
+    {
+        $sql = "SELECT CONSTRAINT_NAME FROM information_schema.KEY_COLUMN_USAGE
+                WHERE TABLE_NAME = '$table' AND COLUMN_NAME = '$column'";
+        $this->stmt = $this->conn->prepare($sql);
+        $this->stmt->execute();
+        $result = $this->stmt->get_result();
+        $fk_name = $result->fetch_assoc();
+        return $fk_name["CONSTRAINT_NAME"];
     }
 
     /**
@@ -112,8 +137,10 @@ class DbHelper extends DbConnection
     public function getCurrentDate()
     {
         $sql = "SELECT CURRENT_DATE AS `currentDate`";
-        $query = $this->conn->query($sql);
-        $date = $query->fetch_assoc();
+        $this->stmt = $this->conn->prepare($sql);
+        $this->stmt->execute();
+        $result = $this->stmt->get_result();
+        $date = $result->fetch_assoc();
         return $date['currentDate'];
     }
 
@@ -121,28 +148,35 @@ class DbHelper extends DbConnection
      * The **`condition`** function generates a conditional SQL-like string based on key-value pairs. It takes four parameters:
      *
      * @param array $key an array of keys (likely representing column names),
-     * @param array $value an array of corresponding values,
      * @param int $index the starting point from which to begin constructing the condition,
      * @param string $implode a string that is used to concatenate the conditions (such as AND or OR).
      * @return string
      */
-    private function condition(array $key, array $value, int $index, string $implode): string
+    private function condition($key, $index, $implode): string
     {
         $condition = [];
         for ($i = $index; $i < count($key); $i++) {
-            $condition[] = "`" . $key[$i] . "` = '" . $value[$i] . "'";
+            $condition[] = "`" . $key[$i] . "` = ?";
         }
-        $cond = implode($implode, $condition);
-        return $cond;
+        return implode($implode, $condition);
     }
 
-    public function foreignKeyNameFinder($table, $column)
+    private function updateValues(array $values)
     {
-        $sql = "SELECT CONSTRAINT_NAME FROM information_schema.KEY_COLUMN_USAGE
-                WHERE TABLE_NAME = '$table' AND COLUMN_NAME = '$column'";
-        $query = $this->conn->query($sql);
-        $fk_name = $query->fetch_assoc();
-        return $fk_name["CONSTRAINT_NAME"];
+        $firstValue = array_shift($values);
+        array_push($values, $firstValue);
+
+        return $values;
+    }
+
+    private function blindItem($values)
+    {
+        return implode(', ', array_fill(0, count($values), '?'));
+    }
+
+    private function bindingParams($values): string
+    {
+        return str_repeat('s', count($values));
     }
 
     /**

@@ -20,21 +20,21 @@ class DbMigration extends DbConnection
      */
     public function __construct($tableName)
     {
-        $this->conn = new mysqli($this->hostname, $this->username, $this->password);
+        parent::__construct();
+        
+        try {
+            $this->createDatabaseIfNotExists();
 
-        if ($this->conn->connect_error) {
-            die("Connection failed: " . $this->conn->connect_error);
+            $this->conn->select_db($this->database);
+
+            if ($this->conn->error) {
+                throw new Exception("Database selection failed: " . $this->conn->error);
+            }
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            exit();
         }
 
-        // Check if the database exists
-        $this->createDatabaseIfNotExists();
-
-        // Now connect to the specified database
-        $this->conn->select_db($this->database);
-
-        if ($this->conn->error) {
-            die("Database selection failed: " . $this->conn->error);
-        }
         $this->db = new DbHelper();
 
         $this->tableName = $tableName;
