@@ -21,7 +21,7 @@ class DbConnection
                 throw new Exception("Connection failed: " . $this->conn->connect_error);
             }
         } catch (Exception $e) {
-            echo $e->getMessage();
+            echo $e->getMessage() . " \n";
             exit();
         }
     }

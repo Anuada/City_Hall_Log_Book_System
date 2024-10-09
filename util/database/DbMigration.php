@@ -21,7 +21,7 @@ class DbMigration extends DbConnection
     public function __construct($tableName)
     {
         parent::__construct();
-        
+
         try {
             $this->createDatabaseIfNotExists();
 
@@ -31,7 +31,7 @@ class DbMigration extends DbConnection
                 throw new Exception("Database selection failed: " . $this->conn->error);
             }
         } catch (Exception $e) {
-            echo $e->getMessage();
+            echo $e->getMessage() . " \n";
             exit();
         }
 

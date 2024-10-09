@@ -18,7 +18,7 @@ class DbHelper extends DbConnection
                 throw new Exception("Database selection failed: " . $this->conn->error);
             }
         } catch (Exception $e) {
-            echo $e->getMessage();
+            echo $e->getMessage() . " \n";
             exit();
         }
     }
