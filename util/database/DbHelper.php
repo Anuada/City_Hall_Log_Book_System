@@ -10,6 +10,7 @@ class DbHelper extends DbConnection
     public function __construct()
     {
         parent::__construct();
+
         try {
             $this->conn->select_db($this->database);
 
