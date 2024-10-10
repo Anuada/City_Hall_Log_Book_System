@@ -16,6 +16,7 @@ employee.addEventListener('click', () => {
     select_button.style.display = 'none';
     log_book_form.style.display = 'block';
     div_container.classList.add('margin-top-form');
+    div_container.classList.add('overlay');
     log_book_form.innerHTML = employee_formfield;
     fetchDivisionOptions();
 });
@@ -25,6 +26,7 @@ visitor.addEventListener('click', () => {
     select_button.style.display = 'none';
     log_book_form.style.display = 'block';
     div_container.classList.add('margin-top-form');
+    div_container.classList.add('overlay');
     log_book_form.innerHTML = visitor_formfield;
     fetchDivisionOptions();
 });
@@ -37,9 +39,9 @@ document.addEventListener('click', (e) => {
         log_book_form.style.display = 'none';
         select_button.style.display = 'flex';
         div_container.classList.remove('margin-top-form');
+        div_container.classList.remove('overlay');
     }
 });
-
 document.addEventListener('submit', (e) => {
     e.preventDefault();
     const form_id = e.target.id;
