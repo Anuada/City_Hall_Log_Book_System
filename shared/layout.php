@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE-edge, chrome=1.0, safari">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="../assets/image/city_logo.svg" type="image/x-icon">
-    <link rel="stylesheet" href="../assets/css/all.css" />
+    <link rel="stylesheet" href="../assets/css/app.css" />
     <link rel="stylesheet" href="../assets/css/w3.css">
     <link rel="stylesheet" href="../assets/css/loader.css">
     <?php echo $styles ?? "" ?>
@@ -31,8 +31,7 @@
     <?php echo $content ?? "" ?>
 
     <!-- JS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script type="module" src="../assets/js/app.js"></script>
     <script src="../assets/js/loader.js"></script>
 
     <?php echo $scripts ?? "" ?>

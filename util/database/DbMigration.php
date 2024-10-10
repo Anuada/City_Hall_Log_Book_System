@@ -74,6 +74,21 @@ class DbMigration extends DbConnection
     }
 
     /**
+     * Adds two timestamp columns to the table: `created_at` and `updated_at`.
+     * @return static The current object `$this`, allowing for method chaining.
+     */
+    public function addTimestamps()
+    {
+        $createdAtColumn = "`created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP";
+        $updatedAtColumn = "`updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP";
+
+        $this->columns[] = $createdAtColumn;
+        $this->columns[] = $updatedAtColumn;
+
+        return $this;
+    }
+
+    /**
      * Renames an existing column in a table with the specified new name, type, and optional nullability.
      * @param mixed $name The current name of the column to be renamed.
      * @param mixed $rename The new name of the column.
@@ -195,8 +210,13 @@ class DbMigration extends DbConnection
      */
     public function create()
     {
+        $columnsSQL = "";
         try {
             $columnsSQL = implode(", ", $this->columns);
+
+            if (empty(trim($columnsSQL))) {
+                throw new Exception('A table must have atleast one visible column.');
+            }
 
             $checkTable = "SHOW TABLES LIKE '$this->tableName'";
             $checkTableQuery = $this->conn->query($checkTable);
@@ -220,7 +240,7 @@ class DbMigration extends DbConnection
     }
 
     /**
-     * Modifies an existing table by adding new columns or modifying existing columns. It first checks if the table exists, and if so, it constructs an `ALTER TABLE` query to modify the table. If the query is successful, it returns a success message. If the query fails, it throws an exception with an error message.
+     * Modifies an existing table by adding new columns and/or modifying existing columns. It first checks if the table exists, and if so, it constructs an `ALTER TABLE` query to modify the table. If the query is successful, it returns a success message. If the query fails, it throws an exception with an error message.
      * @throws \Exception
      * @return string
      */
@@ -228,15 +248,18 @@ class DbMigration extends DbConnection
     {
         $columnsSQL = "";
         try {
-            if (!empty($this->modifiedColumns)) {
-                $columnsSQL = implode(", ", $this->modifiedColumns);
-            } elseif (!empty($this->columns)) {
+
+            $columnsSQL = implode(", ", $this->modifiedColumns);
+
+            if (!empty($this->columns)) {
                 $addColumns = array_map(function ($column) {
                     return "ADD $column";
                 }, $this->columns);
-                $columnsSQL = implode(", ", $addColumns);
-            } else {
-                throw new Exception("Nothing to modify");
+                $columnsSQL .= (!empty(trim($columnsSQL)) ? ", " : "") . implode(", ", $addColumns);
+            }
+
+            if (empty(trim($columnsSQL))) {
+                throw new Exception('Nothing to modify in the table.');
             }
 
             $checkTable = "SHOW TABLES LIKE '$this->tableName'";

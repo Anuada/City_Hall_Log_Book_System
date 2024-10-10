@@ -36,7 +36,7 @@ require_once "util/database/DbMigration.php";
 
 \$migration->addColumn('id', 'int', false, null, true)
     // Add columns here...
-    ->addColumn('created_at', "timestamp", false, 'CURRENT_TIMESTAMP')
+    ->addTimestamps()
     ->addPrimaryKey('id');
 
 echo \$migration->create();

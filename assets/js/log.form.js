@@ -32,8 +32,9 @@ visitor.addEventListener('click', () => {
 });
 
 document.addEventListener('click', (e) => {
-    const id = e.target.id;
-    if (id == 'back') {
+    const targetElement = e.target;
+    const isSvgOrPath = targetElement.id === 'back' || targetElement.closest('#back');
+    if (isSvgOrPath) {
         const log_form = document.getElementById('log_form');
         log_form.reset();
         log_book_form.style.display = 'none';

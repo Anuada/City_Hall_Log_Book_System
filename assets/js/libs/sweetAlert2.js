@@ -1,11 +1,11 @@
-import sweetalert2 from 'https://cdn.skypack.dev/sweetalert2';
+import Swal from 'https://cdn.skypack.dev/sweetalert2';
 
 /**
  * Displays a success alert with a custom message.
  * @param {*} message The message to display in the success alert.
  */
 export const successAlert = (message) => {
-    sweetalert2.fire({
+    Swal.fire({
         icon: "success",
         title: message,
         confirmButtonColor: "#5DB075",
@@ -19,7 +19,7 @@ export const successAlert = (message) => {
  * @param {*} message The message to display in the error alert.
  */
 export const errorAlert = (message) => {
-    sweetalert2.fire({
+    Swal.fire({
         icon: "error",
         title: message,
         confirmButtonColor: "#d33",
@@ -35,7 +35,7 @@ export const errorAlert = (message) => {
  * @param  {...any} actionArgs Arguments to pass to the `action` function.
  */
 export const confirmAlert = (question, action, ...actionArgs) => {
-    sweetalert2.fire({
+    Swal.fire({
         title: question,
         showDenyButton: true,
         confirmButtonText: "Yes",
