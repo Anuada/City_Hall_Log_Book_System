@@ -39,13 +39,18 @@ class DbConnection
 
     /**
      * Checks if a database exists and creates it if it does not. It uses the mysqli extension to execute a `CREATE DATABASE` query.
+     * @throws \Exception
      * @return void
      */
     protected function createDatabaseIfNotExists()
     {
-        $sql = "CREATE DATABASE IF NOT EXISTS `$this->database`";
-        if ($this->conn->query($sql) === false) {
-            die("Error creating database: " . $this->conn->error);
+        try {
+            $sql = "CREATE DATABASE IF NOT EXISTS `$this->database`";
+            if ($this->conn->query($sql) === false) {
+                throw new Exception("Error creating database: " . $this->conn->error);
+            }
+        } catch (Exception $e) {
+            echo $e->getMessage();
         }
     }
 }
