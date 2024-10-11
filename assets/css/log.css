@@ -1,15 +1,7 @@
-.div-margin-top {
-    margin-top: 7%;
-}
 
-@media (max-width: 768px) {
-    .div-margin-top {
-        margin-top: 13%;
-    }
-}
 
 .choice {
-    width: 10rem; 
+    width: 19rem; 
     height: 5rem; 
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
@@ -55,29 +47,4 @@
     }
 }
 
-.margin-top-form {
-    margin-top: 4%;
-}
-
-.log-form-width {
-    width: 100vh;
-}
-
-@media (max-width: 768px) {
-    .reverse-flex {
-        flex-direction: column;
-    }
-
-    .margin-top-20 {
-        margin-top: 20%;
-    }
-
-    .margin-top-5 {
-        margin-top: 5%;
-    }
-
-    .log-form-width {
-        width: 80vh;
-    }
-}
 
