@@ -128,17 +128,19 @@ const fetchDivisionOptions = async () => {
 const handleFormSubmit = async (payload) => {
     const log_form = document.getElementById('log_form');
     const button = log_form.getElementsByTagName('button')[0];
-
+ 
     const [errorOffice, errorEmployeeId, errorFName, errorLName, errorDivision, errorPurpose] = ['errorOffice', 'errorEmployeeId', 'errorFName', 'errorLName', 'errorDivision', 'errorPurpose'].map(e => document.getElementById(e));
     button.disabled = true;
     button.innerHTML = loader;
+    
+
     try {
         const { data } = await axios.post('../api/logVisitor.php', payload);
         successAlert(data.message);
         log_form.reset();
         log_book_form.style.display = 'none';
         select_button.style.display = 'flex';
-        [errorOffice, errorEmployeeId, errorFName, errorLName, errorDivision, errorPurpose].forEach(e => { if (e) e.textContent = '' })
+        [errorOffice, errorEmployeeId, errorFName, errorLName, errorDivision, errorPurpose].forEach(e => { if (e) e.textContent = '' });
 
     } catch (error) {
         const { response } = error;
@@ -169,5 +171,6 @@ const handleFormSubmit = async (payload) => {
     } finally {
         button.disabled = false;
         button.innerHTML = 'Submit Now';
+        div_container.classList.remove('overlay');
     }
-}
+};
