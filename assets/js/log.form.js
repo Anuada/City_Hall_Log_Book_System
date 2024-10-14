@@ -110,6 +110,7 @@ const displayEmployeeInfo = (employeeInfoContainer, data) => {
             <div class="form-text text-danger" id="errorOffice"></div>
         </div>
     `;
+    
 }
 
 const fetchDivisionOptions = async () => {
@@ -128,22 +129,25 @@ const fetchDivisionOptions = async () => {
 const handleFormSubmit = async (payload) => {
     const log_form = document.getElementById('log_form');
     const button = log_form.getElementsByTagName('button')[0];
- 
+
     const [errorOffice, errorEmployeeId, errorFName, errorLName, errorDivision, errorPurpose] = ['errorOffice', 'errorEmployeeId', 'errorFName', 'errorLName', 'errorDivision', 'errorPurpose'].map(e => document.getElementById(e));
+    
     button.disabled = true;
     button.innerHTML = loader;
-    
 
     try {
         const { data } = await axios.post('../api/logVisitor.php', payload);
+        div_container.classList.remove('overlay');
         successAlert(data.message);
         log_form.reset();
         log_book_form.style.display = 'none';
         select_button.style.display = 'flex';
         [errorOffice, errorEmployeeId, errorFName, errorLName, errorDivision, errorPurpose].forEach(e => { if (e) e.textContent = '' });
-
+        
     } catch (error) {
         const { response } = error;
+        div_container.classList.add('overlay');
+        
         if (response && response.status == 422) {
             const errorMessages = response.data.message;
             if (visitor_type == 'Employee') {
@@ -168,9 +172,10 @@ const handleFormSubmit = async (payload) => {
         } else {
             errorAlert(response.data.message);
         }
+
     } finally {
         button.disabled = false;
         button.innerHTML = 'Submit Now';
-        div_container.classList.remove('overlay');
+        // No need to remove overlay here, as it's handled above in the catch block.
     }
-};
+}
