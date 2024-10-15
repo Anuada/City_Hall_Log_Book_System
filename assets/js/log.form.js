@@ -17,6 +17,7 @@ employee.addEventListener('click', () => {
     log_book_form.style.display = 'block';
     div_container.classList.add('margin-top-form');
     div_container.classList.add('overlay');
+    div_container.classList.remove('container');
     log_book_form.innerHTML = employee_formfield;
     fetchDivisionOptions();
 });
@@ -27,6 +28,7 @@ visitor.addEventListener('click', () => {
     log_book_form.style.display = 'block';
     div_container.classList.add('margin-top-form');
     div_container.classList.add('overlay');
+    div_container.classList.remove('container');
     log_book_form.innerHTML = visitor_formfield;
     fetchDivisionOptions();
 });
@@ -175,7 +177,6 @@ const handleFormSubmit = async (payload) => {
 
     } finally {
         button.disabled = false;
-        button.innerHTML = 'Submit Now';
-        // No need to remove overlay here, as it's handled above in the catch block.
+        button.innerHTML = 'Submit Now';    
     }
 }
