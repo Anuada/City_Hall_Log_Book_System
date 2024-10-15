@@ -42,10 +42,10 @@ body {
 .choice {
     width: 80%; 
     max-width: 30%; 
-    height: 100px;
+    height: 90px;
     background-color: yellow;
     color: black;
-    font-size: 30   px;
+    font-size: 30px;
     font-weight: bold;
     margin-top: 20px;
     position: relative;
