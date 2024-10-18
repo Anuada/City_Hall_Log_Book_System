@@ -133,7 +133,7 @@ const handleChangeStatus = async (payload) => {
 const calendar = new Calendar(calendarEl, {
     initialView: 'dayGridMonth',
     events: '../api/logs.php',
-    eventColor: '#0b6131',
+    eventColor: '#ff6740',
     dayMaxEvents: 2,
     selectable: true,
     datesSet: async () => {

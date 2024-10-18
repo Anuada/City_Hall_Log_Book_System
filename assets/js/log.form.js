@@ -17,7 +17,6 @@ employee.addEventListener('click', () => {
     log_book_form.style.display = 'block';
     div_container.classList.add('margin-top-form');
     div_container.classList.add('overlay');
-    div_container.classList.remove('container');
     log_book_form.innerHTML = employee_formfield;
     fetchDivisionOptions();
 });
@@ -28,7 +27,6 @@ visitor.addEventListener('click', () => {
     log_book_form.style.display = 'block';
     div_container.classList.add('margin-top-form');
     div_container.classList.add('overlay');
-    div_container.classList.remove('container');
     log_book_form.innerHTML = visitor_formfield;
     fetchDivisionOptions();
 });
@@ -112,7 +110,6 @@ const displayEmployeeInfo = (employeeInfoContainer, data) => {
             <div class="form-text text-danger" id="errorOffice"></div>
         </div>
     `;
-    
 }
 
 const fetchDivisionOptions = async () => {
@@ -133,23 +130,18 @@ const handleFormSubmit = async (payload) => {
     const button = log_form.getElementsByTagName('button')[0];
 
     const [errorOffice, errorEmployeeId, errorFName, errorLName, errorDivision, errorPurpose] = ['errorOffice', 'errorEmployeeId', 'errorFName', 'errorLName', 'errorDivision', 'errorPurpose'].map(e => document.getElementById(e));
-    
     button.disabled = true;
     button.innerHTML = loader;
-
     try {
         const { data } = await axios.post('../api/logVisitor.php', payload);
-        div_container.classList.remove('overlay');
         successAlert(data.message);
         log_form.reset();
         log_book_form.style.display = 'none';
         select_button.style.display = 'flex';
-        [errorOffice, errorEmployeeId, errorFName, errorLName, errorDivision, errorPurpose].forEach(e => { if (e) e.textContent = '' });
-        
+        [errorOffice, errorEmployeeId, errorFName, errorLName, errorDivision, errorPurpose].forEach(e => { if (e) e.textContent = '' })
+
     } catch (error) {
         const { response } = error;
-        div_container.classList.add('overlay');
-        
         if (response && response.status == 422) {
             const errorMessages = response.data.message;
             if (visitor_type == 'Employee') {
@@ -174,9 +166,8 @@ const handleFormSubmit = async (payload) => {
         } else {
             errorAlert(response.data.message);
         }
-
     } finally {
         button.disabled = false;
-        button.innerHTML = 'Submit Now';    
+        button.innerHTML = 'Submit Now';
     }
 }

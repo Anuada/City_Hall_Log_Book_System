@@ -78,3 +78,18 @@ body {
     text-decoration: none;
   }
 
+  .btn-submit {
+    background-color: #ff6740; 
+    color: white; 
+    border: none; 
+    padding: 10px 20px; 
+    border-radius: 5px; 
+    cursor: pointer; 
+    font-size: bold;
+}
+
+.btn-submit:hover {
+    background-color: #e65c33; 
+}
+
+

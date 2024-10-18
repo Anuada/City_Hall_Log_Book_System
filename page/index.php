@@ -1,45 +1,35 @@
 <?php
 session_start();
 
-$title = "City Hall";
-$load = false;
+$title = "Log Form";
+
 ob_start();
-include "../shared/navbar_page.php";
 $navbar = ob_get_clean();
 ?>
 
 <?php ob_start() ?>
-<link rel="stylesheet" href="../assets/css/page.index.css">
+<link rel="stylesheet" href="../assets/css/log.css">
+<link rel="stylesheet" href="../assets/css/background_indext.css">
+<link rel="stylesheet" href="../assets/css/loader.spinner.css">
 <?php $styles = ob_get_clean() ?>
 
 <?php ob_start() ?>
-
-<div class="w3-center" style="margin-top:13%;">
-    <div class="reverse-flex margin-top-20" style="display:flex; justify-content: space-around; align-items: center;">
-        <div>
-            <img src="../assets/image/city_logo.svg" alt="City Hall Logo" width="300px">
-        </div>
-        <div class="margin-top-5">
-            <div style="font-size: 30px;margin-bottom: 20px">
-                <div style="display:inline-block">
-                    <div class="text">Welcome To City Hall!</div>
-                </div>
-            </div>
-            <div style="display:flex;justify-content:space-around;align-items:center">
-                <div class="w3-padding" style="margin-left:10px;">
-                    <a href="../page/admin_login.php" class="btn ch-green btn-lg">Admin</a>
-
-                </div>
-                <div class="w3-padding" style="margin-left:10px;">
-                    <a href="../page/log.php" class="btn ch-green btn-lg">Log Now</a>
-
-                </div>
-            </div>
-        </div>
+<div id="div_container">
+    <div id="select_button">
+        <button class="btn btn-lg choice" id="employee">Employee</button>
+        <button class="btn btn-lg choice" id="visitor">Visitor</button>
     </div>
+    <div id="log_book_form" class="container div-margin-top log-form-width" style="display: none;"></div>
 </div>
 
+<?php
+$content = ob_get_clean();
+ob_start();
+?>
 
-<?php $content = ob_get_clean() ?>
+<script type="module" src="../assets/js/log.form.js"></script>
 
-<?php require_once "../shared/layout.php" ?>
+<?php
+$scripts = ob_get_clean();
+require_once "../shared/layout.php";
+?>

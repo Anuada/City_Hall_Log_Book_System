@@ -6,16 +6,16 @@ body {
 }
 
 .ch-green {
-    background-color: #0b6131;
+    background-color: #ff6740;
     color: #fff;
 }
 
 .ch-green-text {
-    color: #0b6131;
+    color: #ff6740;
 }
 
 .active-ch {
-    background-color: #0b6131;
+    background-color: #ff6740;
     color: #fff;
     border-radius: 5px;
     z-index: -1;
