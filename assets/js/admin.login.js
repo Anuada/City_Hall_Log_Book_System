@@ -1,4 +1,4 @@
-import axios from './libs/axios.js';
+import fetch from './utilities/fetchClient.js';
 import serializeForm from './helpers/serializeForm.js';
 import { confirmAlert, errorAlert } from "./libs/sweetAlert2.js";
 
@@ -14,14 +14,15 @@ admin_login.addEventListener('submit', (e) => {
 
 const handleLogin = async (payload) => {
     try {
-        await axios.post('../api/adminLogin.php', payload);
+        await fetch.post('../api/adminLogin.php', payload);
         [usernameError, passwordError].forEach(e => { if (e) e.textContent = '' });
         location.href = "../admin/";
-    } catch ({ response }) {
-        if (response && response.status == 422) {
-            usernameError.textContent = response.data.username;
-            passwordError.textContent = response.data.password;
-        } else if (response && response.status == 401) {
+    } catch (error) {
+        const { response } = error;
+        if (response && response.status === 422) {
+            usernameError.textContent = error.data.username;
+            passwordError.textContent = error.data.password;
+        } else if (response && response.status === 401) {
             [usernameError, passwordError].forEach(e => { if (e) e.textContent = '' });
             errorAlert(response.data.message);
         } else {

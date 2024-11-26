@@ -1,6 +1,6 @@
 import { formatDate } from "./helpers/formatter.js";
 import Calendar from './libs/fullCalendar.js';
-import axios from "./libs/axios.js";
+import fetch from './utilities/fetchClient.js';
 import { confirmAlert, errorAlert, successAlert } from "./libs/sweetAlert2.js";
 
 // VARIABLES
@@ -19,7 +19,7 @@ const updateMonthYearDisplay = async (calendar) => {
     const startDate = view.currentStart;
     const formattedDate = startDate.toLocaleDateString('en-CA', { year: 'numeric', month: '2-digit' });
 
-    const { data } = await axios.get('../api/monthlyLogsReports.php', { params: { month: formattedDate } });
+    const { data } = await fetch.get('../api/monthlyLogsReports.php', { month: formattedDate });
 
     currentMonthYearEl.innerHTML = `
         <p>Employee Count: ${data.employee_count}</p>
@@ -30,7 +30,7 @@ const updateMonthYearDisplay = async (calendar) => {
 const handleDateClick = async (info) => {
     const clickedDate = info.dateStr;
 
-    const { data } = await axios.get('../api/logs.php');
+    const { data } = await fetch.get('../api/logs.php');
 
     eventsThisDay = data.filter((e) => {
         return e.start === clickedDate;
@@ -112,7 +112,7 @@ const handleConfirmChangeStatus = async (payload) => {
 
 const handleChangeStatus = async (payload) => {
     try {
-        const { data } = await axios.post('../api/changeStatus.php', payload);
+        const { data } = await fetch.post('../api/changeStatus.php', payload);
         if (data.success == true) {
             successAlert(data.message);
             await updateMonthYearDisplay(calendar);
@@ -123,7 +123,7 @@ const handleChangeStatus = async (payload) => {
     } catch (error) {
         const { response } = error;
         if (response && response.status == 404) {
-            errorAlert(response.data.message);
+            errorAlert(error.data.message);
             modal.modal('hide');
         }
     }

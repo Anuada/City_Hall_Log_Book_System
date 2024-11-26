@@ -1,4 +1,4 @@
-import axios from './libs/axios.js';
+import fetch from './utilities/fetchClient.js';
 import serializeForm from './helpers/serializeForm.js';
 import { confirmAlert, errorAlert, successAlert } from "./libs/sweetAlert2.js";
 import { strReplace, ucWords } from './helpers/formatter.js';
@@ -43,6 +43,7 @@ document.addEventListener('click', (e) => {
         div_container.classList.remove('overlay');
     }
 });
+
 document.addEventListener('submit', (e) => {
     e.preventDefault();
     const form_id = e.target.id;
@@ -76,15 +77,14 @@ const getEmployeeInfo = async (id, purpose) => {
     errorEmployeeId.innerHTML = loader2;
     purpose.value = 'Work';
     try {
-        const { data } = await axios.get('../api/findEmployee.php', { params: { id: id } });
+        const { data } = await fetch.get('../api/findEmployee.php', { id: id });
         employeeInfoContainer.style.display = 'block';
         errorEmployeeId.textContent = '';
         displayEmployeeInfo(employeeInfoContainer, data);
         purpose.value = `Work at the ${ucWords(data.office)}`;
     } catch (error) {
-        const { response } = error;
         employeeInfoContainer.style.display = 'none';
-        errorEmployeeId.textContent = response.data.message;
+        errorEmployeeId.textContent = error.data.message;
     }
 }
 
@@ -115,7 +115,7 @@ const displayEmployeeInfo = (employeeInfoContainer, data) => {
 const fetchDivisionOptions = async () => {
     const division = document.getElementById('division');
     try {
-        const { data } = await axios.get('../api/divisionEnums.php');
+        const { data } = await fetch.get('../api/divisionEnums.php');
         const options = ['<option disabled selected hidden>SELECT DIVISION</option>']
             .concat(data.map(opt => `<option value="${opt}">${opt}</option>`))
             .join('');
@@ -133,7 +133,7 @@ const handleFormSubmit = async (payload) => {
     button.disabled = true;
     button.innerHTML = loader;
     try {
-        const { data } = await axios.post('../api/logVisitor.php', payload);
+        const { data } = await fetch.post('../api/logVisitor.php', payload);
         successAlert(data.message);
         log_form.reset();
         log_book_form.style.display = 'none';
@@ -143,7 +143,7 @@ const handleFormSubmit = async (payload) => {
     } catch (error) {
         const { response } = error;
         if (response && response.status == 422) {
-            const errorMessages = response.data.message;
+            const errorMessages = error.data.message;
             if (visitor_type == 'Employee') {
                 errorEmployeeId.textContent = errorMessages.employee_id;
                 if (errorFName && errorLName && errorOffice) {
@@ -162,9 +162,9 @@ const handleFormSubmit = async (payload) => {
                 fetchDivisionOptions();
             }
         } else if (response && response.status == 400) {
-            errorAlert(response.data.message);
+            errorAlert(error.data.message);
         } else {
-            errorAlert(response.data.message);
+            errorAlert(error.data.message);
         }
     } finally {
         button.disabled = false;
