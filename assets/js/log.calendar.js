@@ -24,7 +24,7 @@ const updateMonthYearDisplay = async (calendar) => {
     currentMonthYearEl.innerHTML = `
         <p>Employee Count: ${data.employee_count}</p>
         <p>Visitor Count: ${data.visitor_count}</p>
-        `;
+    `;
 };
 
 const handleDateClick = async (info) => {
@@ -39,8 +39,7 @@ const handleDateClick = async (info) => {
     displayTable(eventsThisDay);
 
     modalText.text(`${eventsThisDay.length > 1 ? 'Logs' : 'Log'} on ${formatDate(clickedDate)}`);
-
-}
+};
 
 search.addEventListener('input', () => {
     const query = search.value.toLowerCase();
@@ -54,8 +53,7 @@ search.addEventListener('input', () => {
     });
 
     displayTable(filteredLogs);
-
-})
+});
 
 const displayTable = async (data) => {
     modalBody.empty();
@@ -63,6 +61,9 @@ const displayTable = async (data) => {
         data.forEach((event) => {
             modalBody.append(`
                 <tr>
+                    <td>
+                        <input type="checkbox" class="select-log" data-id="${event.id}" ${event.status !== 'Pending' ? 'disabled' : ''}>
+                    </td>
                     <td>${event.id}</td>
                     <td>${event.title}</td>
                     <td>${event.contact_num}</td>
@@ -73,24 +74,56 @@ const displayTable = async (data) => {
                     <td>${event.time}</td>
                     <td class="text-center">
                         ${event.status !== 'Pending' ? `
-                            ${event.status}
-                            ` : `
-                            <select class="form-control">
-                                <option disabled selected>${event.status}</option>
-                                <option data-id="${event.id}" data-status="Accepted">Accept</option>
-                                <option data-id="${event.id}" data-status="Cancelled">Cancel</option>
-                            </select>
-                            `}
+                            <span class="text-success">✔️</span> ${event.status}
+                        ` : `
+                            <span class="text-muted">❌</span> ${event.status}
+                        `}
                     </td>
                 </tr>
             `);
         });
+
+        // Add the Accept button below the table
+        modalBody.append(`
+            <tr>
+                <td colspan="9" class="text-center">
+                    <button id="acceptSelected" class="btn btn-primary">Accept Selected</button>
+                </td>
+            </tr>
+        `);
     } else {
-        modalBody.append('<tr><td colspan="8" class="text-center">No logs found</td></tr>');
+        modalBody.append('<tr><td colspan="9" class="text-center">No logs found</td></tr>');
     }
 
     modal.modal('show');
-}
+
+    // Add event listener for the Accept button
+    document.getElementById('acceptSelected').addEventListener('click', handleAcceptSelected);
+};
+
+// Function to handle the Accept button click
+const handleAcceptSelected = async () => {
+    const selectedLogs = [];
+
+    // Loop through the checkboxes to find selected logs
+    modalBody.find('.select-log:checked').each(function () {
+        const id = $(this).data('id'); // Get the ID from the checkbox
+        selectedLogs.push(id);
+    });
+
+    if (selectedLogs.length === 0) {
+        errorAlert("No logs selected for acceptance.");
+        return;
+    }
+
+    // Prepare payload for the status update
+    const payload = {
+        ids: selectedLogs, // Assuming the API accepts an array of IDs
+        status: 'Accepted'
+    };
+
+    handleConfirmChangeStatus(payload);
+};
 
 document.addEventListener('change', (e) => {
     const statusChange = e.target.closest('.form-control');
@@ -104,12 +137,12 @@ document.addEventListener('change', (e) => {
         };
         handleConfirmChangeStatus(payload);
     }
-})
+});
 
 const handleConfirmChangeStatus = async (payload) => {
     const question = "Are you sure you want to change the status of this log?";
     confirmAlert(question, handleChangeStatus, payload);
-}
+};
 
 const handleChangeStatus = async (payload) => {
     try {
@@ -128,7 +161,7 @@ const handleChangeStatus = async (payload) => {
             modal.modal('hide');
         }
     }
-}
+};
 
 // INITIALIZE THE FULLCALENDAR
 const calendar = new Calendar(calendarEl, {

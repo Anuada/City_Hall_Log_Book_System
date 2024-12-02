@@ -8,6 +8,7 @@ if (!isset($_SESSION['id'])) {
     echo json_encode(['message' => 'Unauthorized Access']);
     exit();
 }
+
 include "../util/database/DbHelper.php";
 include "../enums/Status.php";
 
@@ -23,11 +24,22 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 $json = file_get_contents('php://input');
 $data = json_decode($json, true);
 
-$id = isset($data['id']) ? $data['id'] : '';
+// Check for 'ids' array and 'status'
+$ids = isset($data['ids']) ? $data['ids'] : [];
 $status = isset($data['status']) ? $data['status'] : '';
 
-if (empty($id) || empty($status)) {
-    echo json_encode(['message' => 'Fill out the missing fields', 'success' => false]);
+// Initialize an array to track missing fields
+$missingFields = [];
+
+if (empty($ids)) {
+    $missingFields[] = 'ids';
+}
+if (empty($status)) {
+    $missingFields[] = 'status';
+}
+
+if (!empty($missingFields)) {
+    echo json_encode(['message' => 'Missing fields: ' . implode(', ', $missingFields), 'success' => false]);
     exit();
 }
 
@@ -37,9 +49,16 @@ if (!in_array($status, $statuses)) {
     exit();
 }
 
-$updateStatus = $db->updateRecord('visitor_info', ['id' => $id, 'status' => $status]);
+// Process each id and update the status
+$updateStatusSuccess = false;
+foreach ($ids as $id) {
+    $updateStatus = $db->updateRecord('visitor_info', ['id' => $id, 'status' => $status]);
+    if ($updateStatus > 0) {
+        $updateStatusSuccess = true;
+    }
+}
 
-if ($updateStatus > 0) {
+if ($updateStatusSuccess) {
     echo json_encode(['message' => 'Status Updated Successfully', 'success' => true]);
 } else {
     echo json_encode(['message' => 'Error Updating Status', 'success' => false]);
