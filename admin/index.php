@@ -39,6 +39,7 @@ $displayLogout = true;
                             <tr>
                                 <th>ID</th>
                                 <th>Name</th>
+                                <th>Contact #:</th>
                                 <th>Purpose</th>
                                 <th>Type</th>
                                 <th>Office</th>

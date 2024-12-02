@@ -17,6 +17,13 @@ export const employee_formfield = `
             <div class="form-text text-danger" id="errorDivision"></div>
         </div>
 
+       <div class="form-group">
+    <label for="contact_num">Contact Number</label>
+    <input type="number" class="form-control" id="contact_num" name="contact_num" />
+    <div class="form-text text-danger" id="errorcontact_num"></div>
+</div>
+
+
         <div class="form-group">
             <label for="purpose">Purpose</label>
             <textarea class="form-control" id="purpose" name="purpose" placeholder="Enter your purpose here..."
@@ -62,6 +69,12 @@ export const visitor_formfield = `
             <div class="form-text text-danger" id="errorDivision"></div>
         </div>
 
+        <div class="form-group">
+    <label for="contact_num">Contact Number</label>
+    <input type="number" class="form-control" id="contact_num" name="contact_num" />
+    <div class="form-text text-danger" id="errorcontact_num"></div>
+</div>
+        
         <div class="form-group">
             <label for="purpose">Purpose</label>
             <textarea class="form-control" id="purpose" name="purpose" placeholder="Enter your purpose here..."

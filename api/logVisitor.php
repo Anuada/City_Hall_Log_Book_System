@@ -19,9 +19,9 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 $json = file_get_contents('php://input');
 $data = json_decode($json, true);
 
-$visitor = ['type', 'fname', 'lname', 'office', 'division', 'purpose'];
+$visitor = ['type', 'fname', 'lname', 'office', 'division', 'purpose','contact_num'];
 
-$employee = ['type', 'employee_id', 'division', 'purpose'];
+$employee = ['type', 'employee_id', 'division', 'purpose', 'contact_num'];
 
 $employeeInfo = ['fname', 'lname', 'office'];
 

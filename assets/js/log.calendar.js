@@ -65,6 +65,7 @@ const displayTable = async (data) => {
                 <tr>
                     <td>${event.id}</td>
                     <td>${event.title}</td>
+                    <td>${event.contact_num}</td>
                     <td>${event.purpose}</td>
                     <td>${event.type}</td>
                     <td>${event.office}</td>

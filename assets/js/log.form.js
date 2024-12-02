@@ -134,6 +134,7 @@ const handleFormSubmit = async (payload) => {
     button.innerHTML = loader;
     try {
         const { data } = await fetch.post('../api/logVisitor.php', payload);
+        div_container.classList.remove('overlay');
         successAlert(data.message);
         log_form.reset();
         log_book_form.style.display = 'none';
@@ -143,13 +144,15 @@ const handleFormSubmit = async (payload) => {
     } catch (error) {
         const { response } = error;
         if (response && response.status == 422) {
+            div_container.classList.add('overlay');
             const errorMessages = error.data.message;
             if (visitor_type == 'Employee') {
                 errorEmployeeId.textContent = errorMessages.employee_id;
                 if (errorFName && errorLName && errorOffice) {
-                    errorFName.textContent = errorMessages.fname;
+                    errorFName.textContent = errorMessages.fname;   
                     errorLName.textContent = errorMessages.lname;
                     errorOffice.textContent = errorMessages.office;
+                    
                 }
             } else if (visitor_type == 'Visitor') {
                 errorFName.textContent = errorMessages.fname;
@@ -158,6 +161,7 @@ const handleFormSubmit = async (payload) => {
             }
             errorPurpose.textContent = errorMessages.purpose;
             errorDivision.textContent = errorMessages.division;
+            errorcontact_num.textContent = errorMessages.contact_num;
             if (errorMessages.divisionRefetch && errorMessages.divisionRefetch == true) {
                 fetchDivisionOptions();
             }

@@ -194,6 +194,7 @@ class DbHelper extends DbConnection
                     `purpose`, 
                     `type`, 
                     `status`,
+                    `contact_num`,
                     DATE_FORMAT(`date`, '%Y-%m-%d') AS `start`, 
                     DATE_FORMAT(`date`, '%Y-%m-%d') AS `end`, 
                     DATE_FORMAT(`date`, '%I:%i %p') AS `time` 
